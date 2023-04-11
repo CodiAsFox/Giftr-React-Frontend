@@ -4,9 +4,9 @@
 
 ### ToDos
 
-- [ ] set up git w/ branch rules for main
+- [ x ] set up git w/ branch rules for main
 - [ ] set up Netlify
-- [ ] choose UI kit or create/style with styled components
+- [ x ] choose UI kit or create/style with styled components - CHAKRA
 - [ ] make schedule/pair programming plan
 - [ ] decide on who does what
 
@@ -42,6 +42,8 @@ The React App is a Single Page App with **Routes** to show different components.
 
 #### Add/Edit Person
 
+- [ ] "/person"
+- [ ] "/person/:id"
 - [ ] used for adding a new person or editing an existing one
 
 - [ ] Pass in a user object as a prop to **ADD** or **EDIT**
@@ -56,12 +58,16 @@ The React App is a Single Page App with **Routes** to show different components.
 
 #### Gift List
 
+- [ ] "person/:id/gifts"
 - [ ] show all the gifts for the selected person
 - [ ] name of the person should appear on the screen with list
 - [ ] If list === empty, show a _message_ about how to add a gift
 - [ ] **EDIT** & **_DELETE_** button on each gift list item
 
 #### Add/Edit Gift
+
+- [ ] "person/:id/gifts/add"
+- [ ] "person/:id/gifts/:giftId"
 
 -[ ] used for adding a new gift or editing an existing one -[ ] Pass in a gift object as a prop
 
@@ -110,7 +116,7 @@ The React App is a Single Page App with **Routes** to show different components.
 
 #### OAuth redirect w/ JWT Token
 
-- [ ] When a user clicks the login button, navigate to /auth/google?redirect_url=http://localhost:3000/login/success which will trigger the OAuth login
+- [ ] When a user clicks the login button, navigate to {render url}/auth/google?redirect_url={netlify}/login/success which will trigger the OAuth login
 - [ ] when successful, will redirect to http://localhost:3000/login/success?token=eyt198nefo018e.1feef1ef1 with the jwt token in the querystring
 - [ ] send the url route, that you want to use to handle the login, in the querystring with the param name redirect_url
 - [ ] JWT string will be returned in the querystring with the param name token
@@ -138,8 +144,7 @@ The React App is a Single Page App with **Routes** to show different components.
 
 ### Design
 
-- [ ] Styled Components OR
-- [ ] UI Kit
+- [ ] UI Kit Chakra integration
 
 ### Hosting/Routing
 
@@ -147,6 +152,3 @@ The React App is a Single Page App with **Routes** to show different components.
 - [ ] connected to Netlify
 - [ ] BrowserRouter
 
----
-
-## API / Backend Instructions
