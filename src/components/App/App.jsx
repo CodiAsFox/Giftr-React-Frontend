@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import './App.css'
+import Footer from '../../Footer/Footer'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div className="App">
-      <h1>Giftr</h1>
+      <Header/>
+      <Main/>
+      <Footer/>
     </div>
   )
 }
