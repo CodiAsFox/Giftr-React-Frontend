@@ -1,8 +1,12 @@
 import React from 'react'
+import Logout from "./Logout/Logout"
 
 const Header = () => {
   return (
-    <div>Header</div>
+    <header>Header
+      <CheckToken />
+      <Logout />
+    </header>
   )
 }
 

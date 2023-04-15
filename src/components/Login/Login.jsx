@@ -6,7 +6,7 @@ import { useToken } from '../../context/TokenContext';
 const Login = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [token, updateToken] = useToken();
-  const [isLogin, setLogin] = useState(false);
+
   const navigate = useNavigate();
   function doLogin() {
     const redirect = import.meta.env.VITE_APP_URL;
