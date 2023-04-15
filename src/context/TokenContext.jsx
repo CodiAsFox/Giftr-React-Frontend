@@ -1,20 +1,21 @@
-import { useContext, createContext, useState, useEffect } from 'react';
+import { useContext, createContext } from 'react';
+import useSessionStorage from '../hooks/UseSessionStorage';
 
 const TokenContext = createContext();
 
 function TokenProvider(props) {
-  const [token, setToken] = useState(null);
   const tokenKey = import.meta.env.VITE_TOKEN_KEY;
+  const [token, setToken] = useSessionStorage(tokenKey, null);
 
-  useEffect(() => {
-    //TODO: actually add the sessionStorage code
-    //check in sessionStorage
-    //for an existing value
-    //handle removeItem if token is null
-    // get code from context assignment
-  }, [token]);
+  function updateToken( sessionToken ) {
+    if (sessionToken) { 
+      setToken(sessionToken);
+    } else {
+      setToken(null);
+    }
+  }
 
-  return <TokenContext.Provider value={[token, setToken]} {...props} />;
+  return <TokenContext.Provider value={[token, updateToken]} {...props} />;
 }
 
 function useToken() {
