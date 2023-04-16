@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToken } from '../../context/TokenContext';
 import { useGiftr } from '../../context/GiftrContext';
 
 const People = () => {
-  const [giftr, updateGiftr] = useGiftr([]);
+  const [people, setPeople] = useState([]);
   const [token, setToken] = useToken();
   const navigate = useNavigate();
   
@@ -27,7 +27,7 @@ const People = () => {
       })
       .then((data)=>{
         console.log(data);
-        updateGiftr(
+        setPeople(
           data.map(ppl=>{
             const person = {
               id: ppl._id,
@@ -50,7 +50,7 @@ const People = () => {
     <section className="people">
       <h2>People</h2>
       <ul className="pplList">
-        {giftr.map(person=>(
+        {people.map(person=>(
           <li key={person.id}>{person.name}</li>
         ))}
       </ul>
