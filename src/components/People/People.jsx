@@ -25,7 +25,7 @@ const People = () => {
         if(!res.ok) throw new Error('Invalid response');
         return res.json();
       })
-      .then(({data})=>{
+      .then((data)=>{
         console.log(data);
         updateGiftr(
           data.map(ppl=>{
@@ -42,6 +42,7 @@ const People = () => {
       .catch(err=>{
         console.warn(err.message);
         setToken(null)
+        navigate('/');
       })
   },[]);
 
