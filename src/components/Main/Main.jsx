@@ -13,12 +13,10 @@ const Main = () => {
       <Routes>
         <Route path="/" element={<Home />} index />
         <Route path="/people/" element={<People />}>
-          {/* <Route path=":id" element={<Person />}></Route> */}
-          <Route path="/add" element={<Person />}></Route>
+          <Route path=":id" element={<Person />}></Route>
         </Route>
         <Route path="/gifts/" element={<Gifts />}>
-          {/* <Route path=":giftId" element={<Gift />} /> */}
-          <Route path="/gift" element={<Gift />} />
+          <Route path=":giftId" element={<Gift />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
