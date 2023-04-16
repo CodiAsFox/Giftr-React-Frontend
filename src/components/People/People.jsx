@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToken } from '../../context/TokenContext';
 import { useGiftr } from '../../context/GiftrContext';
+import ListItem from '../ListItem/ListItem';
 
 const People = () => {
   const [people, setPeople] = useState([]);
@@ -51,7 +52,7 @@ const People = () => {
       <h2>People</h2>
       <ul className="pplList">
         {people.map(person=>(
-          <li key={person.id}>{person.name}</li>
+          <ListItem key={person.id} person={person}/>
         ))}
       </ul>
     </section>
