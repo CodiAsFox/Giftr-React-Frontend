@@ -4,10 +4,10 @@
 
 ### ToDos
 
-- [ x ] set up git w/ branch rules for main
-- [ ] set up Netlify
-- [ x ] choose UI kit or create/style with styled components - CHAKRA
-- [ ] make schedule/pair programming plan
+- [x] set up git w/ branch rules for main
+- [x] set up Netlify
+- [x] choose UI kit or create/style with styled components - CHAKRA
+- [x] make schedule/pair programming plan
 - [ ] decide on who does what
 
 ### Project Summary
