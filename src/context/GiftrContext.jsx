@@ -1,10 +1,9 @@
 import { createContext, useState, useContext } from "react";
-import { UseLocalStorage } from "../hooks/UseLocalStorage";
 
 const GiftrContext = createContext();
 
 function GiftrProvider(props) {
-  const [giftr, setGiftr] = UseLocalStorage('GiftrData', []);
+  const [giftr, setGiftr] = useState('GiftrData', null);
 
   const updateGiftr = (data) => {
     setGiftr(data);
