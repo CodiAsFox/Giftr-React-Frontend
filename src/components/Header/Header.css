@@ -1,0 +1,46 @@
+header .main-nav {
+  background-color: var(--head-bg);
+  padding: 0.5rem 1.55rem;
+}
+header .main-nav .left-nav,
+header .main-nav .right-nav {
+  min-width: 100px;
+}
+header .main-nav .plus--icon {
+  font-size: 15px;
+  position: relative;
+  top: -4px;
+}
+header .main-nav .container-fluid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header .main-nav .logo {
+  color: var(--light);
+  font-weight: 600;
+  font-size: 2rem;
+  display: flex;
+  align-items: end;
+  width: fit-content;
+  margin-bottom: 0;
+  margin: auto;
+  position: relative;
+  transition: margin 600ms ease-in-out;
+}
+header .main-nav .logo .sub-title {
+  font-size: 1rem;
+  font-weight: 300;
+  position: absolute;
+  bottom: -0.75rem;
+  right: 0;
+}
+@media screen and (min-width: 60rem) {
+  header .main-nav .logo {
+    margin: 0;
+  }
+}
+header .main-nav .logo img {
+  max-height: 3.125rem;
+  padding-right: 0.625rem;
+}

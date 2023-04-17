@@ -1,0 +1,67 @@
+{
+  "masterPicture": "./public/logo/logo-sq.svg",
+  "iconsPath": "/",
+  "design": {
+    "ios": {
+      "pictureAspect": "backgroundAndMargin",
+      "backgroundColor": "#442a6b",
+      "margin": "32%",
+      "assets": {
+        "ios6AndPriorIcons": false,
+        "ios7AndLaterIcons": false,
+        "precomposedIcons": false,
+        "declareOnlyDefaultIcon": true
+      },
+      "appName": "giftr"
+    },
+    "desktopBrowser": {
+      "design": "background",
+      "backgroundColor": "#442a6b",
+      "backgroundRadius": 0.05,
+      "imageScale": 0.7
+    },
+    "windows": {
+      "pictureAspect": "noChange",
+      "backgroundColor": "#603cba",
+      "onConflict": "override",
+      "assets": {
+        "windows80Ie10Tile": false,
+        "windows10Ie11EdgeTiles": {
+          "small": false,
+          "medium": true,
+          "big": false,
+          "rectangle": false
+        }
+      },
+      "appName": "giftr"
+    },
+    "androidChrome": {
+      "pictureAspect": "shadow",
+      "themeColor": "#442a6b",
+      "manifest": {
+        "name": "giftr",
+        "startUrl": "https://giftr-vctr.netlify.app/",
+        "display": "standalone",
+        "orientation": "notSet",
+        "onConflict": "override",
+        "declared": true
+      },
+      "assets": {
+        "legacyIcon": false,
+        "lowResolutionIcons": false
+      }
+    },
+    "safariPinnedTab": {
+      "pictureAspect": "blackAndWhite",
+      "threshold": 96.875,
+      "themeColor": "#5bbad5"
+    }
+  },
+  "settings": {
+    "scalingAlgorithm": "Mitchell",
+    "errorOnImageTooSmall": false,
+    "readmeFile": false,
+    "htmlCodeFile": false,
+    "usePathAsIs": false
+  }
+}

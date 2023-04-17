@@ -31,9 +31,10 @@ const Login = () => {
   }
 
   return (
-    <p>
-      <button onClick={doLogin}>Login</button>
-    </p>
+    <a href="#" onClick={doLogin}>
+      <span className="material-symbols-rounded">login</span>
+      <span className="menu-text">Login</span>
+    </a>
   );
 };
 

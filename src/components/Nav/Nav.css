@@ -1,0 +1,30 @@
+.main-menu .btn {
+  margin-left: 20px;
+}
+.main-menu button,
+.main-menu > a {
+  margin-left: 20px;
+  background-color: var(--dark);
+  padding: 5px 10px;
+  margin: 0 10px;
+  display: inline-flex;
+  background: var(--dark);
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  transition: box-shadow 300ms ease, border 400ms ease;
+  cursor: pointer;
+}
+
+.main-menu button .material-symbols-rounded,
+.main-menu > a .material-symbols-rounded {
+  margin-right: 5px;
+}
+.main-menu button:hover,
+.main-menu button:focus-visible,
+.main-menu > a:hover,
+.main-menu > a:focus-visible {
+  text-decoration: none;
+  background-color: rgba(123, 75, 145, 0.29);
+  border: 2px solid var(--accent);
+  box-shadow: 0px 0px 20px var(--accent);
+}
