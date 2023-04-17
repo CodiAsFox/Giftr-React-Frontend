@@ -3,7 +3,7 @@ import { createContext, useState, useContext } from "react";
 const GiftrContext = createContext();
 
 function GiftrProvider(props) {
-  const [giftr, setGiftr] = useState('GiftrData', null);
+  const [giftr, setGiftr] = useState(null);
 
   const updateGiftr = (data) => {
     setGiftr(data);

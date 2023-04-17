@@ -5,7 +5,7 @@ import { useGiftr } from '../../context/GiftrContext';
 import ListItem from '../ListItem/ListItem';
 
 const People = () => {
-  const [giftr, updateGiftr] = useGiftr(null);
+  const [giftr, updateGiftr] = useGiftr();
   const [token, setToken] = useToken();
   const navigate = useNavigate();
   
@@ -28,7 +28,7 @@ const People = () => {
       })
       .then((data)=>{
         console.log(data);
-        updateGiftr(
+        setGiftr(
           data.map(ppl=>{
             const person = {
               id: ppl._id,
@@ -52,9 +52,9 @@ const People = () => {
       <h2>People</h2>
       {console.log('giftr', giftr)}
       <ul className="pplList">
-        {/* {giftr.map(person=>(
+        {giftr.map(person=>(
           <ListItem key={person.id} person={person}/>
-        ))} */}
+        ))}
       </ul>
     </section>
   )
