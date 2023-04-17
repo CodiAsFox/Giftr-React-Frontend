@@ -1,17 +1,22 @@
-import { NavLink } from "react-router-dom";
 import NavItem from "../NavItem/NavItem";
 import IsLogged from "../../auth/IsLogged";
 import Login from "../Login/Login";
 import Logout from "../Logout/Logout";
-import "./Nav.css";
+import { Button } from "@chakra-ui/react";
 
 const Nav = () => {
   return IsLogged() ? (
     <nav className="main-menu">
-      <NavItem className="btn" to="/people">
-        <span className="material-symbols-rounded">group</span>
-        <span className="menu-text">People</span>
-      </NavItem>
+      <Button
+        colorScheme="teal"
+        as={"a"}
+        fontSize={"sm"}
+        fontWeight={600}
+        href={"/people"}
+        mr={3}
+      >
+        People
+      </Button>
       <Logout />
 
       {/* <NavLink to="/">People</NavLink>

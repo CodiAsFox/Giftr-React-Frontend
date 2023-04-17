@@ -2,10 +2,16 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useToken } from "../../context/TokenContext";
+import { Button, Text } from "@chakra-ui/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle, faFontAwesome } from "@fortawesome/free-brands-svg-icons";
 
-const Login = () => {
+const Login = (props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [token, updateToken] = useToken();
+  const label = props.label;
+  const colour = props.colour;
+  const icon = props.icon;
 
   const navigate = useNavigate();
 
@@ -31,10 +37,22 @@ const Login = () => {
   }
 
   return (
-    <a href="#" onClick={doLogin}>
-      <span className="material-symbols-rounded">login</span>
-      <span className="menu-text">Login</span>
-    </a>
+    <Button
+      onClick={doLogin}
+      as={"a"}
+      fontSize={"sm"}
+      fontWeight={600}
+      colorScheme={colour ?? "pink"}
+    >
+      {icon ? (
+        <Text pr={2}>
+          <FontAwesomeIcon icon={faGoogle} />
+        </Text>
+      ) : (
+        <></>
+      )}
+      {label ?? "Login"}
+    </Button>
   );
 };
 
