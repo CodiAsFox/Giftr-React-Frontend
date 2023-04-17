@@ -21,11 +21,7 @@ const Nav = () => {
     </nav>
   ) : (
     <nav className="main-menu">
-      <ul className="menu">
-        <li>
-          <Login />
-        </li>
-      </ul>
+      <Login />
     </nav>
   );
 };

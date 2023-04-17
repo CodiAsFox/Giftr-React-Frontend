@@ -13,6 +13,12 @@
   border-radius: 10px;
   transition: box-shadow 300ms ease, border 400ms ease;
   cursor: pointer;
+  text-decoration: none;
+}
+
+.main-menu button span,
+.main-menu > a span {
+  text-decoration: none;
 }
 
 .main-menu button .material-symbols-rounded,
