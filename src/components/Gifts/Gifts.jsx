@@ -1,8 +1,12 @@
-import React from 'react'
+import ListItem from "../ListItem/ListItem";
 
 const Gifts = () => {
   return (
-    <div>Gifts</div>
+    <section className="gifts">
+      <ul className="giftList">
+        <ListItem/>
+      </ul>
+    </section>
   )
 }
 
