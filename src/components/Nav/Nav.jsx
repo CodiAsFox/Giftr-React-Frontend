@@ -8,7 +8,7 @@ import "./Nav.css";
 const Nav = () => {
   return IsLogged() ? (
     <nav className="main-menu">
-      <NavItem className="btn" to="/users">
+      <NavItem className="btn" to="/people">
         <span className="material-symbols-rounded">group</span>
         <span className="menu-text">People</span>
       </NavItem>
