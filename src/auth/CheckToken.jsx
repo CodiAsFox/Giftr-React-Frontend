@@ -10,7 +10,6 @@ export default function CheckToken() {
 
   useEffect(()=>{
     if(!token) {
-      setGiftr([]);
       navigate('/');
     }
   },[]);
