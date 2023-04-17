@@ -4,6 +4,8 @@ const ListItem = (props) => {
   const person = props.person;
 
   if(person) {
+    const gifts = person.gifts;
+    console.log('gifts:', gifts)
     return (
       <li>
         <div>
@@ -12,7 +14,7 @@ const ListItem = (props) => {
         </div>
         <div className="actions">
           <NavLink to={`/people/${person.id}`}>Edit</NavLink>
-          <NavLink to={`/gifts/`}>Gifts</NavLink>
+          <NavLink to={`/people/${person.id}/gifts/`}>Gifts</NavLink>
         </div>
       </li>
     )

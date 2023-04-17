@@ -15,7 +15,7 @@ const Main = () => {
         <Route path="/people/" element={<People />}>
           <Route path=":id" element={<Person />}></Route>
         </Route>
-        <Route path="/gifts/" element={<Gifts />}>
+        <Route path="/people/:id/gifts/" element={<Gifts />}>
           <Route path=":giftId" element={<Gift />} />
         </Route>
         <Route path="*" element={<NotFound />} />
