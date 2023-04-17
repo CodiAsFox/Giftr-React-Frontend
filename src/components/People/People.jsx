@@ -1,11 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToken } from '../../context/TokenContext';
-import { useGiftr } from '../../context/GiftrContext';
+// import { useGiftr } from '../../context/GiftrContext';
 import ListItem from '../ListItem/ListItem';
 
 const People = () => {
-  const [giftr, updateGiftr] = useGiftr();
+
+  const [people, setPeople] = useState([]);
+
   const [token, setToken] = useToken();
   const navigate = useNavigate();
   
@@ -28,17 +30,22 @@ const People = () => {
       })
       .then((data)=>{
         console.log(data);
-        setGiftr(
-          data.map(ppl=>{
-            const person = {
-              id: ppl._id,
-              name: ppl.name,
-              dob: ppl.dob,
-              gifts: ppl.gifts
-            }
-            return person;
-          })
+
+        return data.map(ppl=>{
+          const person = {
+            id: ppl._id,
+            name: ppl.name,
+            dob: ppl.dob,
+            gifts: ppl.gifts
+          }
+          return person;
+        }
+
         )
+      })
+      .then(ppl=>{
+        console.log('ppl', ppl)
+        setPeople(ppl);
       })
       .catch(err=>{
         console.warn(err.message);
@@ -50,9 +57,11 @@ const People = () => {
   return (
     <section className="people">
       <h2>People</h2>
-      {console.log('giftr', giftr)}
+      {console.log('people', people)}
       <ul className="pplList">
-        {giftr.map(person=>(
+
+        {people.map(person=>(
+
           <ListItem key={person.id} person={person}/>
         ))}
       </ul>

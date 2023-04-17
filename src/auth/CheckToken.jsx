@@ -5,12 +5,10 @@ import { useEffect } from 'react';
 
 export default function CheckToken() {
   const [token,setToken] = useToken();
-  const [giftr,setGiftr] = useGiftr();
   const navigate = useNavigate();
 
   useEffect(()=>{
     if(!token) {
-      setGiftr([]);
       navigate('/');
     }
   },[]);
