@@ -3,7 +3,6 @@ import { useGiftr } from '../../context/GiftrContext';
 import ListItem from "../ListItem/ListItem";
 
 const Gifts = () => {
-  const [giftr, setGiftr] = useGiftr();
 
   const { id } = useParams();
   console.log('person id: ' + id)
