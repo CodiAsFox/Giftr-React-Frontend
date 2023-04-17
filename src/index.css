@@ -1,0 +1,296 @@
+:root {
+  --white: #fff;
+  --light: #f6f6f6;
+  --black: #000;
+  --dark: #333;
+  --body-bg: #333;
+  --separator: #443c3c;
+  --primary-colour: #5f86f2;
+  --secondary-colour: #a65ff2;
+  --third-colour: #f25fd0;
+  --forth-colour: #5ff2f0;
+  --text: #f6f6f6;
+  --colour-primary: rgb(147, 15, 224);
+  --colour-primary-dark: rgb(45, 23, 64);
+  --head-bg: rgb(45, 23, 64);
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  color: var(--text);
+}
+
+/* Set core root defaults */
+html {
+  line-height: 1.5;
+  font-family: graphie, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  text-rendering: optimizeSpeed;
+  margin: 0;
+}
+
+/* Update default margin */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+ul,
+ol,
+dl,
+dd {
+  margin: 0 0 1.5rem;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* A elements that don't have a class get default styles */
+a {
+  -webkit-text-decoration-skip: ink;
+  text-decoration-skip-ink: auto;
+  color: var(--colour-primary-dark);
+  transition: color 0.2s, background-color 0.2s;
+  -webkit-transition: color 0.2s, background-color 0.2s;
+  -moz-transition: color 0.2s, background-color 0.2s;
+  -ms-transition: color 0.2s, background-color 0.2s;
+  -o-transition: color 0.2s, background-color 0.2s;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--colour-primary);
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+svg {
+  fill: currentColor;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+.container {
+  width: min(75em, 100%);
+  margin: 0 auto;
+}
+
+.container-fluid {
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.container--narrow {
+  width: min(35em, 100%);
+}
+
+.content-holder {
+  min-height: 30vh;
+}
+
+html {
+  background: var(--body-bg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+h1 {
+  font-size: 2.019rem;
+  line-height: 1.3;
+}
+
+h2 {
+  font-size: 1.756rem;
+  line-height: 1.3;
+}
+
+h3 {
+  color: var(--colour-primary-dark);
+  font-size: 1.525rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: 1.325rem;
+  color: var(--color-accent);
+  margin: 0;
+  line-height: 1.3;
+}
+
+h5 {
+  font-size: 1.15rem;
+  font-weight: normal;
+  line-height: 1.3;
+}
+
+h6 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.text-bold {
+  font-weight: bold !important;
+}
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+@media only screen and (min-width: 45em) {
+  h1 {
+    font-size: 2.481rem;
+  }
+  h2 {
+    font-size: 2.069rem;
+  }
+  h3 {
+    font-size: 1.725rem;
+  }
+  h4 {
+    font-size: 1.438rem;
+  }
+  h5 {
+    font-size: 1.2rem;
+  }
+}
+@media only screen and (min-width: 60em) {
+  h1 {
+    font-size: 3.056rem;
+  }
+  h2 {
+    font-size: 2.444rem;
+  }
+  h3 {
+    font-size: 1.956rem;
+  }
+  h4 {
+    font-size: 1.563rem;
+  }
+  h5 {
+    font-size: 1.25rem;
+  }
+}
+.btn {
+  color: var(--light);
+  background: none;
+  padding: 0.9375rem;
+  border-radius: 50%;
+  border: none;
+  line-height: 1;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  cursor: pointer;
+  transition: background 300ms ease-in-out;
+}
+.btn[disabled] {
+  display: none;
+}
+.btn:hover,
+.btn:focus-visible {
+  background-color: rgba(123, 75, 145, 0.45);
+}
+.btn-shuffle {
+  z-index: 1;
+}
+@media screen and (min-width: 60rem) {
+  .btn-shuffle {
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+*:focus-visible {
+  outline: 0.1875rem double var(--colour-primary);
+  outline-offset: 0.0625rem;
+}
+
+.skip-links {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.skip-links a {
+  position: absolute;
+  top: -10rem;
+  left: 0.5rem;
+  z-index: 100000;
+  display: inline-block;
+  padding: 0.55em 1.5em 0.5em;
+  background-color: var(--colour-primary);
+  border: 0.125rem solid var(--colour-primary);
+  color: var(--light);
+  border-radius: 0.25em;
+  /* link necessary styles */
+  text-decoration: none;
+}
+
+.skip-links a:focus {
+  top: 0.75rem;
+  outline: 0;
+}
+
+.sr-only {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal !important;
+}
