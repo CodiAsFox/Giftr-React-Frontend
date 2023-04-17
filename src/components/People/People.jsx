@@ -5,7 +5,7 @@ import { useToken } from '../../context/TokenContext';
 import ListItem from '../ListItem/ListItem';
 
 const People = () => {
-  const [people, setPeople] = useState();
+  const [people, setPeople] = useState([]);
   const [token, setToken] = useToken();
   const navigate = useNavigate();
   
