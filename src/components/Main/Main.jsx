@@ -9,7 +9,7 @@ import "./Main.css";
 
 const Main = () => {
   return (
-    <main>
+    <main className="container">
       <Routes>
         <Route path="/" element={<Home />} index />
         <Route path="/people/" element={<People />}>

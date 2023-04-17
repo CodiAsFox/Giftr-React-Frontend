@@ -11,9 +11,10 @@ const Logout = () => {
   }
 
   return token ? (
-    <p>
-      <button onClick={doLogout}>Logout</button>
-    </p>
+    <button onClick={doLogout}>
+      <span className="material-symbols-rounded">logout</span>
+      <span className="menu-text">Logout</span>
+    </button>
   ) : (
     <></>
   );
