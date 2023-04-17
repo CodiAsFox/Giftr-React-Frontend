@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToken } from '../../context/TokenContext';
 import { useGiftr } from '../../context/GiftrContext';
 import ListItem from '../ListItem/ListItem';
 
 const People = () => {
-  const [people, setPeople] = useState([]);
+  const [giftr, updateGiftr] = useGiftr(null);
   const [token, setToken] = useToken();
   const navigate = useNavigate();
   
-
+  // setting to giftrContext
   useEffect(() =>{
     const api = import.meta.env.VITE_API_URL;
     const url = `${api}/people`;
@@ -28,7 +28,7 @@ const People = () => {
       })
       .then((data)=>{
         console.log(data);
-        setPeople(
+        updateGiftr(
           data.map(ppl=>{
             const person = {
               id: ppl._id,
@@ -50,10 +50,11 @@ const People = () => {
   return (
     <section className="people">
       <h2>People</h2>
+      {console.log('giftr', giftr)}
       <ul className="pplList">
-        {people.map(person=>(
+        {/* {giftr.map(person=>(
           <ListItem key={person.id} person={person}/>
-        ))}
+        ))} */}
       </ul>
     </section>
   )
