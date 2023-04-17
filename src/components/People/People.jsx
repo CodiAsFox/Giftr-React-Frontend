@@ -5,7 +5,9 @@ import { useToken } from '../../context/TokenContext';
 import ListItem from '../ListItem/ListItem';
 
 const People = () => {
+
   const [people, setPeople] = useState([]);
+
   const [token, setToken] = useToken();
   const navigate = useNavigate();
   
@@ -28,6 +30,7 @@ const People = () => {
       })
       .then((data)=>{
         console.log(data);
+
         return data.map(ppl=>{
           const person = {
             id: ppl._id,
@@ -37,6 +40,7 @@ const People = () => {
           }
           return person;
         }
+
         )
       })
       .then(ppl=>{
@@ -55,7 +59,9 @@ const People = () => {
       <h2>People</h2>
       {console.log('people', people)}
       <ul className="pplList">
+
         {people.map(person=>(
+
           <ListItem key={person.id} person={person}/>
         ))}
       </ul>
