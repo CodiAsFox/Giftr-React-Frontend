@@ -1,30 +1,79 @@
-import React from "react";
+import {
+  Box,
+  Flex,
+  Text,
+  Stack,
+  useColorModeValue,
+  useBreakpointValue,
+  useDisclosure,
+} from "@chakra-ui/react";
 import CheckToken from "../../auth/CheckToken";
 import Nav from "../Nav/Nav";
-import "./Header.css";
 
-const Header = () => {
+import { ReactComponent as Logo } from "../../media/logo/logo-full.svg";
+
+export default function WithSubnavigation() {
+  const { isOpen, onToggle } = useDisclosure();
+
   return (
-    <header>
-      <div className="skip-links">
-        <a href="#menu">Skip to menu</a>
-        <a href="#content">Skip to content</a>
-      </div>
-      <div className="main-nav">
-        <div className="container-fluid">
-          <div className="left-nav"></div>
-          <h1 className="logo">
-            <span className="sr-only">Giftr</span>
-            <img src="/logo/logo-full.svg" alt="logo" />
-          </h1>
-          <div className="right-nav">
-            <CheckToken />
-            <Nav />
-          </div>
-        </div>
-      </div>
-    </header>
-  );
-};
+    <Box>
+      <Flex
+        bg={useColorModeValue("white", "gray.800")}
+        color={useColorModeValue("gray.600", "white")}
+        minH={"60px"}
+        py={{ base: 2 }}
+        px={{ base: 4 }}
+        borderBottom={1}
+        borderStyle={"solid"}
+        borderColor={useColorModeValue("gray.200", "gray.900")}
+        align={"center"}
+      >
+        <Flex
+          flex={{ base: 1, md: "auto" }}
+          ml={{ base: -2 }}
+          display={{ base: "flex", md: "none" }}
+        >
+          {/* <IconButton
+            onClick={onToggle}
+            icon={
+              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
+            }
+            variant={"ghost"}
+            aria-label={"Toggle Navigation"}
+          /> */}
+        </Flex>
+        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
+          <Text
+            textAlign={useBreakpointValue({ base: "center", md: "left" })}
+            fontFamily={"heading"}
+            color={useColorModeValue("gray.800", "white")}
+          ></Text>
+          <Logo />
+        </Flex>
 
-export default Header;
+        <Stack
+          flex={{ base: 1, md: 0 }}
+          justify={"flex-end"}
+          direction={"row"}
+          spacing={6}
+        >
+          {/* <Button
+            as={"a"}
+            fontSize={"sm"}
+            fontWeight={600}
+            color={"white"}
+            bg={"pink.400"}
+            href={"#"}
+            _hover={{
+              bg: "pink.300",
+            }}
+          >
+            Sign Up
+          </Button> */}
+          <CheckToken />
+          <Nav />
+        </Stack>
+      </Flex>
+    </Box>
+  );
+}
