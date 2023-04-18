@@ -20,23 +20,23 @@ The React App is a Single Page App with **Routes** to show different components.
 
 - [ ] login/logout
 - [ ] home (people list)
-- [ ] add/edit person
-- [ ] gift list for one person
+- [x] add/ [] edit person
+- [x] gift list for one person
 - [ ] add/edit gift idea
 
 #### Login Route
 
 - [ ] "/" route
 - [ ] Login button if the user is not logged in
-- [ ] message plus a logout button if the user is logged in
+- [ ] message plus a logout button if the user is logged in (*message greeting the user, telling them what to do*)
 
 #### Home Route/People List Component
 
-- [ ] "/" route (once authenticated)
-- [ ] show a list of names and dates of birth for people that have been saved through the API
+- [x] "/" route (once authenticated)
+- [x] show a list of names and dates of birth for people that have been saved through the API
 - [ ] each person show the name plus the month and day of birth
 - [ ] sorted by month, then day (the same way dates would appear on the calendar each year)
-- [ ] Each person item needs an **EDIT** button plus a **GIFT** button to navigate to the gift list
+- [x] Each person item needs an **EDIT** button plus a **GIFT** button to navigate to the gift list
 - [ ] If the list is empty, show a _message_ about how to add a person
 - [ ] add person button in header
 
@@ -50,16 +50,16 @@ The React App is a Single Page App with **Routes** to show different components.
 - [ ] **ADD** the id will be null
 - [ ] **EDIT** have person id
 
-- [ ] input for name
-- [ ] input for the date
+- [x] input for name
+- [x] input for the date
 
 - [ ] **ADD** or **EDIT** => **_SAVE_** button
 - [ ] **EDIT** => **_DELETE_** button should also be shown
 
 #### Gift List
 
-- [ ] "person/:id/gifts"
-- [ ] show all the gifts for the selected person
+- [x] "person/:id/gifts"
+- [x] show all the gifts for the selected person
 - [ ] name of the person should appear on the screen with list
 - [ ] If list === empty, show a _message_ about how to add a gift
 - [ ] **EDIT** & **_DELETE_** button on each gift list item
@@ -78,14 +78,14 @@ The React App is a Single Page App with **Routes** to show different components.
 
 ### Navigation
 
-- [ ] use **BrowserRouter**
+- [x] use **BrowserRouter**
 
 #### Login
 
-- [ ] OAuth authenticates then redirect to "/"
-- [ ] on successful navigation:
-- [ ] save JWT token in SessionStorage
-- [ ] programmatically navigate to the person list route
+- [x] OAuth authenticates then redirect to "/"
+- [x] on successful navigation:
+- [x] save JWT token in SessionStorage
+- [x] programmatically navigate to the person list route
 
 #### Header
 
@@ -110,9 +110,9 @@ The React App is a Single Page App with **Routes** to show different components.
 
 - [ ] URL for a gift - check if the user wrote 'https://' at the start; add it if needed
 
-- [ ] LOGIN function work by using /auth/ endpoints in your API
-- [ ] login will return a JWT string that you save in sessionStorage
-- [ ] logout, you only need to delete the token from storage
+- [x] LOGIN function work by using /auth/ endpoints in your API
+- [x] login will return a JWT string that you save in sessionStorage
+- [x] logout, you only need to delete the token from storage
 
 #### OAuth redirect w/ JWT Token
 
