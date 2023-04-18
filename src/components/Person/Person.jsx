@@ -1,8 +1,12 @@
-import React from 'react'
+import AddPerson from '../AddPerson/AddPerson'
 
 const Person = () => {
+  // if id, AddPerson, else edit
   return (
-    <div>Person</div>
+    <section className="person">
+      <AddPerson/>
+      {/* {else edit person} */}
+    </section>
   )
 }
 
