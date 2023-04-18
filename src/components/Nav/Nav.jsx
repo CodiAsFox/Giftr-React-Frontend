@@ -17,12 +17,18 @@ const Nav = () => {
       >
         People
       </Button>
-      <Logout />
+      <Button
+        colorScheme="teal"
+        as={"a"}
+        fontSize={"sm"}
+        fontWeight={600}
+        href={"/people/add"}
+        mr={3}
+      >
+        Add person
+      </Button>
 
-      {/* <NavLink to="/">People</NavLink>
-      <NavLink to="/add">Person</NavLink>
-      <NavLink to="/gifts">Gifts</NavLink>
-      <NavLink to="/gift">Gift</NavLink> */}
+      <Logout />
     </nav>
   ) : (
     <nav className="main-menu">
