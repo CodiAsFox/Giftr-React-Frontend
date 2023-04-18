@@ -12,6 +12,10 @@ import theme from "./theme/theme";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ChakraProvider>
+      {localStorage.setItem(
+        "chakra-ui-color-mode",
+        theme.config.initialColorMode
+      )}
       <TokenProvider>
         <GiftrProvider>
           <BrowserRouter>
