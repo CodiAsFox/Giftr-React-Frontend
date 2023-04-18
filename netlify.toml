@@ -4,6 +4,7 @@
   status = 200
 
 [[headers]]
+  # Define which paths this specific [[headers]] block will cover.
   for = "/*"
     [headers.values]
-    Access-Control-Allow-Origin = https://dev-giftr-vctr.onrender.com, https://giftr-vctr.onrender.com
+    Access-Control-Allow-Origin = "https://dev-giftr-vctr.onrender.com, https://dev-giftr-vctr.onrender.com"
