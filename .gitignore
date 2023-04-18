@@ -35,3 +35,4 @@ dist-ssr
 # Project rules
 .env.dev
 .env.production
+.env.*
