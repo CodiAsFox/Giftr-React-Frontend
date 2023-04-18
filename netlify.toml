@@ -1,4 +1,9 @@
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
 [[headers]]
   for = "/*"
     [headers.values]
-    Access-Control-Allow-Origin = "https://dev-giftr-vctr.onrender.com, https://giftr-vctr.onrender.com"
+    Access-Control-Allow-Origin = https://dev-giftr-vctr.onrender.com, https://giftr-vctr.onrender.com
