@@ -36,9 +36,9 @@ const Gifts = () => {
         if (!res.ok) throw new Error("Invalid response");
         return res.json();
       })
-      .then((gfts) => {
+      .then(({data}) => {
         // console.log(gfts);
-        return gfts.map((gft) => {
+        return data.map((gft) => {
           const gf = {
             gift_id: gft._id,
             gift_name: gft.txt,

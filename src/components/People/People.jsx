@@ -37,7 +37,7 @@ const People = () => {
         return res.json();
       })
 
-      .then((data) => {
+      .then(({data}) => {
         // console.log(data);
         return data.map((ppl) => {
           const person = {
