@@ -26,17 +26,61 @@ const Person = () => {
     });
   }, []);
 
+  // TODO: remove this useEffect after testing
   useEffect(() => {
     console.log(page);
   }, [page]);
 
+  // clicking on SAVE button
   function savePerson() {
-    postPerson(person);
+    if (id) {
+      console.log('gonna PATCH')
+      updatePerson(person);
+    }
+
+    if (!id) {
+      postPerson(person);
+    }
   }
 
+  // fill the inputs with data from getPerson fetch
+
+  // API GET, POST, PATCH, DELETE
+  const api = import.meta.env.VITE_API_URL;
+  const url = `${api}/people`;
+
+  function getPerson() {
+    // api/people/${id}
+    let endpoint = `${url}/${id}`;
+    let request = new Request(endpoint, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    fetch(request)
+      .then((res) => {
+        if (res.status === 401) throw new Error("Unauthorized access to API.");
+        if (!res.ok) throw new Error("Invalid response");
+        return res.json();
+      })
+      .then(({ data }) => {
+        console.log(data);
+        return data;
+      })
+      .then(({name, dob}) => {
+        dob = dob.split('T')[0];        
+        setPerson({name, dob});
+      })
+      .catch((err) => {
+        console.warn(err.message);
+        setToken(null);
+        navigate("/");
+      });
+  } // end of getPerson
+
   function postPerson(data) {
-    const api = import.meta.env.VITE_API_URL;
-    const url = `${api}/people`;
     let request = new Request(url, {
       method: "POST",
       headers: {
@@ -53,6 +97,31 @@ const Person = () => {
       return res.json();
     });
   }
+
+  function updatePerson(data) {
+    let endpoint = `${url}/${id}`;
+    let request = new Request(endpoint, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    fetch(request).then((res) => {
+      if (res.status === 401) throw new Error("Unauthorized access to API.");
+      if (!res.ok) throw new Error("Invalid response");
+      console.log("response: ", res);
+      return res.json();
+    });
+  }
+
+  useEffect(()=>{
+    if (id) {
+      getPerson();
+    }
+  },[]);
 
   // if useParams id OR person not null, then edit person
   return (
