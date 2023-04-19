@@ -16,10 +16,11 @@ const Main = () => {
           <Route path="/people/" element={<People />}>
             <Route path=":id" element={<Person />}/>
           </Route>
-          <Route path={"people/add"} element={<Person/>}></Route>
+          <Route path={"/people/add"} element={<Person/>}></Route>
           <Route path="/people/:id/gifts/" element={<Gifts />}>
             <Route path=":giftId" element={<Gift />} />
           </Route>
+          <Route path={"/people/:id/gifts/add"} element={<Gift/>}></Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Box>
