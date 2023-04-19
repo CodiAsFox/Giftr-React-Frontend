@@ -14,7 +14,7 @@ import { faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
 import BoxListItem from "../BoxListItem/BoxListItem";
 import { useNavigate } from "react-router-dom";
 import { useToken } from "../../context/TokenContext";
-// import { useGiftr } from '../../context/GiftrContext';
+import { usePage } from "../../context/PageContext";
 
 const People = () => {
   const [people, setPeople] = useState([]);
@@ -22,7 +22,12 @@ const People = () => {
   const [token, setToken] = useToken();
   const navigate = useNavigate();
 
-  // setting to giftrContext
+  const [page, updatePage] = usePage();
+
+  useEffect(() => {
+    updatePage({ ...page, page: "people" });
+  }, []);
+
   useEffect(() => {
     const api = import.meta.env.VITE_API_URL;
     const url = `${api}/people`;
@@ -53,7 +58,7 @@ const People = () => {
         });
       })
       .then((ppl) => {
-        // console.log("ppl", ppl);
+        console.log("ppl", ppl);
         setPeople(ppl);
       })
       .catch((err) => {

@@ -5,7 +5,6 @@ import {
   Stack,
   useColorModeValue,
   useBreakpointValue,
-  useDisclosure,
   Image,
 } from "@chakra-ui/react";
 import { SkipNavLink } from "@chakra-ui/skip-nav";
@@ -14,8 +13,6 @@ import Nav from "../Nav/Nav";
 import Back from "../Back/Back";
 
 export default function WithSubnavigation() {
-  const { isOpen, onToggle } = useDisclosure();
-
   return (
     <Box>
       <SkipNavLink zIndex={1}>Skip to content</SkipNavLink>
@@ -32,14 +29,6 @@ export default function WithSubnavigation() {
       >
         <Flex flex={{ base: 1 }} justify={"flex-start"}>
           <Back />
-          {/* <IconButton
-            onClick={onToggle}
-            icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
-            }
-            variant={"ghost"}
-            aria-label={"Toggle Navigation"}
-          /> */}
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
           <Text

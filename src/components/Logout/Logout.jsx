@@ -22,9 +22,9 @@ const Logout = () => {
       backgroundColor="red.700"
       pr={2}
     >
-      <Tooltip label="Logout" hasArrow bg="red.600" color="white">
-        <FontAwesomeIcon icon={faArrowRightFromBracket} />
-      </Tooltip>
+      {/* <Tooltip label="Logout" hasArrow bg="red.600" color="white"> */}
+      <FontAwesomeIcon icon={faArrowRightFromBracket} />
+      {/* </Tooltip> */}
     </Button>
   ) : (
     <></>
