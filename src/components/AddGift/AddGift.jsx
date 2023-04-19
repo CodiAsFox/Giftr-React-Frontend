@@ -1,24 +1,27 @@
 import { useState } from 'react';
-import { useToken } from "../../context/TokenContext";
+import { useToken } from '../../context/TokenContext';
 import { Button } from "@chakra-ui/react";
 
-const AddPerson = () => {
+const AddGift = ({personId}) => {
   const [token, setToken] = useToken();
   
   const shape = {
-    name: '',
-    dob: '',
+    txt: '',
+    store: '',
+    url: '',
   };
   
-  const [person, setPerson] = useState({...shape}); // a copy of shape is sent to STATE
+  const [gift, setGift] = useState({...shape}); // a copy of shape is sent to STATE
+
+  console.log('person id: ', personId);
   
-  function savePerson() {
-    postPerson(person);
+  function saveGift() {
+    postGift(gift);
   }
 
-  function postPerson(data) {
+  function postGift(data) {
     const api = import.meta.env.VITE_API_URL;
-    const url = `${api}/people`;
+    const url = `${api}/people/${personId}/gifts/`;
     let request = new Request(url, {
       method: "POST",
       headers: {
@@ -36,32 +39,38 @@ const AddPerson = () => {
         return res.json();
       })
   }
-
-  // if useParams id OR person not null, then edit person
   return (
-    // ADD PERSON
-    <section className="addPerson">
+    <section className='addGift'>
       <form>
           <div className="formBox">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="gift_idea">Gift Idea</label>
             <input 
               type="text" 
-              name="name" 
+              name="gift_idea" 
               maxLength="80"
-              placeholder="Person's name"
-              value={`${person.name}`} 
-              onChange={(ev) => setPerson({ ...person, name: ev.target.value })}
+              placeholder="Enter your gift idea"
+              value={`${gift.txt}`} 
+              onChange={(ev) => setGift({ ...gift, txt: ev.target.value })}
               required />
           </div>
           <div className="formBox">
-            <label htmlFor="dob">Date of Birth </label>
+            <label htmlFor="store">Store</label>
             <input 
-            type="date" 
-            id="dob" 
-            name="dob" 
-            pattern="\d{4}-\d{2}-\d{2}"
-            value={`${person.dob}`} 
-            onChange={(ev) => setPerson({ ...person, dob: ev.target.value })} 
+            type="text" 
+            name="store" 
+            maxLength="80"  
+            value={`${gift.store}`} 
+            onChange={(ev) => setGift({ ...gift, store: ev.target.value })} 
+            required />
+          </div>
+          <div className="formBox">
+            <label htmlFor="url">URL</label>
+            <input 
+            type="text" 
+            name="url" 
+            maxLength="80"  
+            value={`${gift.url}`} 
+            onChange={(ev) => setGift({ ...gift, url: ev.target.value })} 
             required />
           </div>
           <div className="formBox">
@@ -71,7 +80,7 @@ const AddPerson = () => {
               fontSize={"sm"}
               fontWeight={600}
               mr={3}
-              onClick={savePerson}
+              onClick={saveGift}
             >
             Save
             </Button>
@@ -89,7 +98,6 @@ const AddPerson = () => {
         </form>
     </section>
   )
-  // else edit person
 }
 
-export default AddPerson
+export default AddGift

@@ -1,8 +1,12 @@
-import React from 'react'
+import { useParams } from 'react-router-dom';
+import AddGift from "../AddGift/AddGift";
 
 const Gift = () => {
+  const { id } = useParams(); // pass this down through params
   return (
-    <div>Gift</div>
+    <section className="gift">
+      <AddGift personId={id}/>
+    </section>
   )
 }
 
