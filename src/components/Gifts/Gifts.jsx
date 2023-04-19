@@ -18,11 +18,13 @@ const Gifts = () => {
   const [token, setToken] = useToken();
 
   const { id } = useParams();
+
+  // API Call Functions (GET, DELETE)
+  const api = import.meta.env.VITE_API_URL;
+  const url = `${api}/people/${id}/gifts`;
   // console.log("person id: " + id);
 
-  useEffect(() => {
-    const api = import.meta.env.VITE_API_URL;
-    const url = `${api}/people/${id}/gifts`;
+  function getGifts() {
     let request = new Request(url, {
       method: "GET",
       headers: {
@@ -56,6 +58,14 @@ const Gifts = () => {
         setToken(null);
         navigate("/");
       });
+  }
+
+  function deleteGift() {
+
+  } 
+
+  useEffect(() => {
+    getGifts();
   }, []);
 
   return (
