@@ -1,47 +1,65 @@
-import NavItem from "../NavItem/NavItem";
 import IsLogged from "../../auth/IsLogged";
 import Login from "../Login/Login";
 import Logout from "../Logout/Logout";
-import { Button } from "@chakra-ui/react";
-import { useParams } from 'react-router-dom';
+import { Button, Tooltip, Text, Box } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPeopleGroup,
+  faGift,
+  faPlus,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Nav = () => {
   const { id } = useParams(); // not working
+  const AddGiftIcon = () => {
+    return (
+      <>
+        <FontAwesomeIcon icon={faGift} />
+        <FontAwesomeIcon icon={faPlus} />
+      </>
+    );
+  };
+  const AddPersonIcon = () => {
+    return (
+      <>
+        <FontAwesomeIcon icon={faUser} />
+        <FontAwesomeIcon icon={faPlus} />
+      </>
+    );
+  };
   return IsLogged() ? (
-    <nav className="main-menu">
-      <Button
-        colorScheme="teal"
-        as={"a"}
-        fontSize={"sm"}
-        fontWeight={600}
-        href={"/people"}
-        mr={3}
-      >
-        People
+    <Box className="main-menu">
+      <Button as={"a"} bg="cyan.600" fontSize={"lg"} href={"/people"} mr={3}>
+        <FontAwesomeIcon icon={faPeopleGroup} color="white" />
+        <Text pl={2}>People</Text>
       </Button>
       <Button
-        colorScheme="teal"
         as={"a"}
-        fontSize={"sm"}
-        fontWeight={600}
+        bg="green.700"
+        fontSize={"lg"}
         href={"/people/add"}
         mr={3}
       >
-        Add person
+        <Tooltip label="Add Person" hasArrow bg="cyan.400" color="white">
+          <AddPersonIcon />
+        </Tooltip>
       </Button>
       <Button
-        colorScheme="teal"
         as={"a"}
-        fontSize={"sm"}
-        fontWeight={600}
+        bg="green.700"
+        fontSize={"lg"}
         href={`${id}/gift/add`} // not working
         mr={3}
       >
-        Add gift
+        <Tooltip label="Add Gift" hasArrow bg="cyan.400" color="white">
+          <AddGiftIcon />
+        </Tooltip>
       </Button>
 
       <Logout />
-    </nav>
+    </Box>
   ) : (
     <nav className="main-menu">
       <Login />

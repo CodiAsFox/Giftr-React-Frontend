@@ -6,19 +6,21 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Image,
 } from "@chakra-ui/react";
+import { SkipNavLink } from "@chakra-ui/skip-nav";
 import CheckToken from "../../auth/CheckToken";
 import Nav from "../Nav/Nav";
-
-import { ReactComponent as Logo } from "../../media/logo/logo-full.svg";
+import Back from "../Back/Back";
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
     <Box>
+      <SkipNavLink zIndex={1}>Skip to content</SkipNavLink>
       <Flex
-        bg={useColorModeValue("white", "gray.800")}
+        bg={useColorModeValue("white", "blue.900")}
         color={useColorModeValue("gray.600", "white")}
         minH={"60px"}
         py={{ base: 2 }}
@@ -28,11 +30,8 @@ export default function WithSubnavigation() {
         borderColor={useColorModeValue("gray.200", "gray.900")}
         align={"center"}
       >
-        <Flex
-          flex={{ base: 1, md: "auto" }}
-          ml={{ base: -2 }}
-          display={{ base: "flex", md: "none" }}
-        >
+        <Flex flex={{ base: 1 }} justify={"flex-start"}>
+          <Back />
           {/* <IconButton
             onClick={onToggle}
             icon={
@@ -48,11 +47,11 @@ export default function WithSubnavigation() {
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
           ></Text>
-          <Logo />
+          <Image src="./logo/logo.svg" w={185} />
         </Flex>
 
         <Stack
-          flex={{ base: 1, md: 0 }}
+          flex={{ base: 1 }}
           justify={"flex-end"}
           direction={"row"}
           spacing={6}

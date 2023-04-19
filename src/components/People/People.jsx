@@ -3,11 +3,14 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
+  Text,
+  Box,
   Heading,
   Stack,
   StackDivider,
 } from "@chakra-ui/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
 import BoxListItem from "../BoxListItem/BoxListItem";
 import { useNavigate } from "react-router-dom";
 import { useToken } from "../../context/TokenContext";
@@ -37,7 +40,7 @@ const People = () => {
         return res.json();
       })
 
-      .then(({data}) => {
+      .then(({ data }) => {
         // console.log(data);
         return data.map((ppl) => {
           const person = {
@@ -61,10 +64,25 @@ const People = () => {
   }, []);
 
   return (
-    <section className="people">
-      <Card>
-        <CardHeader>
-          <Heading size="md">People List</Heading>
+    <Box className="people">
+      <Card borderRadius={10}>
+        <CardHeader bg="pink.900" borderTopRadius={10}>
+          <Heading
+            size="lg"
+            bgGradient="linear(to-r, green.200, pink.500)"
+            bgClip="text"
+            fontSize="4xl"
+            fontWeight="extrabold"
+          >
+            <FontAwesomeIcon
+              icon={faPeopleGroup}
+              color="#9be59d"
+              width="3rem"
+            />
+            <Text display="inline" pl={1}>
+              People List
+            </Text>
+          </Heading>
         </CardHeader>
         <CardBody>
           <Stack divider={<StackDivider />} spacing="4">
@@ -74,7 +92,7 @@ const People = () => {
           </Stack>
         </CardBody>
       </Card>
-    </section>
+    </Box>
   );
 };
 

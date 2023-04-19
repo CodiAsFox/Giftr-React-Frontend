@@ -19,7 +19,7 @@ const Logout = () => {
       as={"a"}
       fontSize={"sm"}
       fontWeight={600}
-      colorScheme="gray"
+      backgroundColor="red.700"
       pr={2}
     >
       <Tooltip label="Logout" hasArrow bg="red.600" color="white">
