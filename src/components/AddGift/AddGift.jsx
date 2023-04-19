@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { useToken } from '../../context/TokenContext';
 import { Button } from "@chakra-ui/react";
 
-const AddGift = () => {
+const AddGift = ({personId}) => {
   const [token, setToken] = useToken();
   
   const shape = {
@@ -14,8 +13,7 @@ const AddGift = () => {
   
   const [gift, setGift] = useState({...shape}); // a copy of shape is sent to STATE
 
-  const { id } = useParams(); // pass this down through params
-  console.log('person id: ', id);
+  console.log('person id: ', personId);
   
   function saveGift() {
     postGift(gift);
@@ -23,7 +21,7 @@ const AddGift = () => {
 
   function postGift(data) {
     const api = import.meta.env.VITE_API_URL;
-    const url = `${api}/people/${id}/gifts/`;
+    const url = `${api}/people/${personId}/gifts/`;
     let request = new Request(url, {
       method: "POST",
       headers: {
