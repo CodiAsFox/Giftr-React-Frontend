@@ -67,6 +67,11 @@ const Gifts = () => {
       });
   }
 
+  function removeGiftFromList(giftId) {
+    let updatedGifts = gifts.filter(gift=>gift.gift_id !== giftId);
+    setGifts(updatedGifts);
+  }
+
   function deleteGift(id) {
     let endpoint = `${url}/${id}`;
     let request = new Request(endpoint, {
@@ -80,8 +85,10 @@ const Gifts = () => {
       .then((res) => {
         if (res.status === 401) throw new Error("Unauthorized access to API.");
         if (!res.ok) throw new Error("Invalid response");
+        console.log('res: ', res)
         return res.json();
       })
+      .then(()=>removeGiftFromList(id))
       .catch((err) => {
         console.warn(err.message);
         setToken(null);
