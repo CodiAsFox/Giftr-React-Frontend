@@ -5,26 +5,27 @@ import Person from "../Person/Person";
 import Gifts from "../Gifts/Gifts";
 import Gift from "../Gift/Gift";
 import NotFound from "../NotFound/NotFound";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import { SkipNavContent } from "@chakra-ui/skip-nav";
 
 const Main = () => {
   return (
-    <main className="container">
-      <Box minHeight={"74.5vh"}>
+    <SkipNavContent>
+      <Box p={4}>
         <Routes>
           <Route path="/" element={<Home />} index />
           <Route path="/people/" element={<People />}>
-            <Route path=":id" element={<Person />}/>
+            <Route path=":id" element={<Person />} />
           </Route>
-          <Route path={"/people/add"} element={<Person/>}></Route>
+          <Route path={"/people/add"} element={<Person />}></Route>
           <Route path="/people/:id/gifts/" element={<Gifts />}>
             <Route path=":giftId" element={<Gift />} />
           </Route>
-          <Route path={"/people/:id/gifts/add"} element={<Gift/>}></Route>
+          <Route path={"/people/:id/gifts/add"} element={<Gift />}></Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Box>
-    </main>
+    </SkipNavContent>
   );
 };
 
