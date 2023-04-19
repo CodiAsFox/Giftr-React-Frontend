@@ -12,6 +12,8 @@ const ListItem = (props) => {
   const navigate = useNavigate();
   const person = props.person;
   const gift = props.gift;
+  const deleteItem = props.deleteItem;
+  const [itemDeleted, setItemDeleted] = useState(false);
 
   if (person) {
     const { id, name, dob } = person;
@@ -60,32 +62,16 @@ const ListItem = (props) => {
     const { id } = useParams();
     const { gift_id, gift_name, store, url } = gift;
     const apiUrl = props.apiUrl;
-    
-    
 
     function doEdit(id, gift_id) {
-      // navigate(`/people/${id}/gifts/${gift_id}`);
+      navigate(`/people/${id}/gifts/${gift_id}`);
     }
 
-    function doDelete(id, gift_id) {
-      
-        // navigate(`/people/${id}/gifts/${gift_id}`);
+    function doDelete(gift_id) {
+      deleteItem(gift_id);
     }
-
-    
 
     return (
-      // <li>
-      //   <div>
-      //     <p className="gift-name">{gift_name}</p>
-      //     <p className="gift-store">{store}</p>
-      //     <p className="gift-url">{url}</p>
-      //   </div>
-      //   <div className="actions">
-      //     <NavLink to={`/people/${id}/gifts/${gift_id}`}>Edit</NavLink>
-      //     <button>DELETE</button>
-      //   </div>
-      // </li>
       <Flex>
         <Box flex="5">
           <Heading size="xs" textTransform="uppercase">
@@ -107,7 +93,7 @@ const ListItem = (props) => {
             <FontAwesomeIcon icon={faPenToSquare} />
             <Text pl={1}>Edit</Text>
           </Button>
-          <Button colorScheme="red" onClick={() => doGifts(id)}>
+          <Button colorScheme="red" onClick={() => doDelete(gift_id)}>
             <FontAwesomeIcon icon={faTrash} />
             <Text pl={1}>Delete</Text>
           </Button>

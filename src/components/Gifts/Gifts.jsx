@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useToken } from "../../context/TokenContext";
-import ListItem from "../BoxListItem/BoxListItem";
+import { usePage } from "../../context/PageContext";
+
 import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Heading,
   Stack,
   StackDivider,
@@ -18,6 +18,13 @@ const Gifts = () => {
   const [token, setToken] = useToken();
 
   const { id } = useParams();
+
+  const [page, updatePage] = usePage();
+
+  useEffect(() => {
+    updatePage({ ...page, page: "gifts", id: id });
+    console.log(page);
+  }, []);
 
   // API Call Functions (GET, DELETE)
   const api = import.meta.env.VITE_API_URL;
@@ -38,7 +45,7 @@ const Gifts = () => {
         if (!res.ok) throw new Error("Invalid response");
         return res.json();
       })
-      .then(({data}) => {
+      .then(({ data }) => {
         // console.log(gfts);
         return data.map((gft) => {
           const gf = {
@@ -61,26 +68,26 @@ const Gifts = () => {
   }
 
   function deleteGift(id) {
-      let endpoint = `${url}/${id}`;
-      let request = new Request(endpoint, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    let endpoint = `${url}/${id}`;
+    let request = new Request(endpoint, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      fetch(request)
-        .then((res) => {
-          if (res.status === 401) throw new Error("Unauthorized access to API.");
-          if (!res.ok) throw new Error("Invalid response");
-          return res.json();
-        })
-        .catch((err) => {
-          console.warn(err.message);
-          setToken(null);
-          navigate("/");
-        });
-      } 
+    fetch(request)
+      .then((res) => {
+        if (res.status === 401) throw new Error("Unauthorized access to API.");
+        if (!res.ok) throw new Error("Invalid response");
+        return res.json();
+      })
+      .catch((err) => {
+        console.warn(err.message);
+        setToken(null);
+        navigate("/");
+      });
+  }
 
   useEffect(() => {
     getGifts();
@@ -95,7 +102,12 @@ const Gifts = () => {
         <CardBody>
           <Stack divider={<StackDivider />} spacing="4">
             {gifts.map((gift) => (
-              <BoxListItem key={gift.gift_id} gift={gift} apiUrl={url}/>
+              // <BoxListItem key={gift.gift_id} gift={gift} apiUrl={url} />
+              <BoxListItem
+                key={gift.gift_id}
+                gift={gift}
+                deleteItem={deleteGift}
+              />
             ))}
           </Stack>
         </CardBody>
