@@ -16,6 +16,7 @@ const ListItem = (props) => {
   const [itemDeleted, setItemDeleted] = useState(false);
 
   if (person) {
+    // /people (list)
     const { id, name, dob } = person;
     const jsDate = new Date(dob);
     const [date, setDate] = useState(null);
@@ -30,6 +31,7 @@ const ListItem = (props) => {
     useEffect(() => {
       setDate(jsDate.toLocaleDateString("en", { dateStyle: "medium" }));
     }, [dob]);
+
     return (
       <Flex>
         <Box flex="5">
@@ -59,6 +61,7 @@ const ListItem = (props) => {
   }
 
   if (gift) {
+    // /:id/gifts (list)
     const { id } = useParams();
     const { gift_id, gift_name, store, url } = gift;
 
