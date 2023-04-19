@@ -28,9 +28,11 @@ const People = () => {
     updatePage({ ...page, page: "people" });
   }, []);
 
-  useEffect(() => {
-    const api = import.meta.env.VITE_API_URL;
-    const url = `${api}/people`;
+  // API Call Functions (GET, DELETE)
+  const api = import.meta.env.VITE_API_URL;
+  const url = `${api}/people`;
+
+  function getPeople() {
     let request = new Request(url, {
       method: "GET",
       headers: {
@@ -66,7 +68,40 @@ const People = () => {
         setToken(null);
         navigate("/");
       });
+  }
+
+  useEffect(() => {
+    getPeople();
   }, []);
+
+  // function removeGiftFromList(giftId) {
+  //   let updatedGifts = gifts.filter(gift=>gift.gift_id !== giftId);
+  //   setGifts(updatedGifts);
+  // }
+
+  // function deleteGift(id) {
+  //   let endpoint = `${url}/${id}`;
+  //   let request = new Request(endpoint, {
+  //     method: "DELETE",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   });
+
+  //   fetch(request)
+  //     .then((res) => {
+  //       if (res.status === 401) throw new Error("Unauthorized access to API.");
+  //       if (!res.ok) throw new Error("Invalid response");
+  //       console.log('res: ', res)
+  //       return res.json();
+  //     })
+  //     .then(()=>removeGiftFromList(id))
+  //     .catch((err) => {
+  //       console.warn(err.message);
+  //       setToken(null);
+  //       navigate("/");
+  //     });
+  // }
 
   return (
     <Box className="people">
