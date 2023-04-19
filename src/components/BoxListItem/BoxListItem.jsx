@@ -61,7 +61,6 @@ const ListItem = (props) => {
   if (gift) {
     const { id } = useParams();
     const { gift_id, gift_name, store, url } = gift;
-    const apiUrl = props.apiUrl;
 
     function doEdit(id, gift_id) {
       navigate(`/people/${id}/gifts/${gift_id}`);
