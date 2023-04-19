@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useToken } from "../../context/TokenContext";
-import { Button } from "@chakra-ui/react"
+import { Button } from "@chakra-ui/react";
 
 const AddPerson = () => {
   const [token, setToken] = useToken();
