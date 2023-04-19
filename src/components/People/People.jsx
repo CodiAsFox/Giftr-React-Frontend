@@ -74,9 +74,10 @@ const People = () => {
     getPeople();
   }, []);
 
-  // function removeGiftFromList(giftId) {
-  //   let updatedGifts = gifts.filter(gift=>gift.gift_id !== giftId);
-  //   setGifts(updatedGifts);
+  // MOVE TO PERSON (EDIT)
+  // function removePersonFromList(persId) {
+  //   let updatedPeople = people.filter(person=>person.id !== persId);
+  //   setPeople(updatedPeople);
   // }
 
   // function deleteGift(id) {
