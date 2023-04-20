@@ -64,39 +64,29 @@ const ListItem = (props) => {
       setLoading(false);
     }, [dob]);
 
-    // console.log(person.gifts.length);
-
-    const GiftCount = person.gifts.length;
+    // REQUIRES refactoring - API not structured for this + badge
+    // const GiftCount = person.gifts.length;
+    const GiftCount = person.giftCount;
 
     return (
       <Flex>
         <Box flex="5">
           <Stack direction={["column", "row"]} spacing="24px">
-<<<<<<< Updated upstream
-            {/* <WrapItem>
-              <Avatar name={name} src={getAvatar} />
-            </WrapItem> */}
-=======
             <WrapItem>
               <SkeletonCircle size="48px" isLoaded={!loading}>
                 <Avatar name={name} src={getAvatar} />
               </SkeletonCircle>
             </WrapItem>
->>>>>>> Stashed changes
             <Box flex="1">
-              <Skeleton isLoaded={!loading}>
-                <Heading size="xs" textTransform="uppercase">
-                  {name}
-                  <Badge ml="1" colorScheme="blue">
-                    {GiftCount} {GiftCount >= 1 ? "Gift" : "Gifts"}
-                  </Badge>
-                </Heading>
-              </Skeleton>
-              <Skeleton isLoaded={!loading}>
-                <Text pt="2" fontSize="sm">
-                  {date}
-                </Text>
-              </Skeleton>
+              <Heading size="xs" textTransform="uppercase">
+                {name}
+                {/* <Badge ml="1" colorScheme="blue">
+                  {GiftCount} {GiftCount >= 1 ? "Gift" : "Gifts"}
+                </Badge> */}
+              </Heading>
+              <Text pt="2" fontSize="sm">
+                {date}
+              </Text>
             </Box>
           </Stack>
         </Box>
