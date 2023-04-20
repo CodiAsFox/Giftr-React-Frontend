@@ -64,9 +64,15 @@ const ListItem = (props) => {
       setLoading(false);
     }, [dob]);
 
+<<<<<<< HEAD
     // REQUIRES refactoring - API not structured for this + badge
     // const GiftCount = person.gifts.length;
     const GiftCount = person.giftCount;
+=======
+    // console.log(person.gifts.length);
+
+    const GiftCount = person.gifts.length;
+>>>>>>> cf87979 (Fixed missing tag)
 
     return (
       <Flex>
@@ -78,15 +84,20 @@ const ListItem = (props) => {
               </SkeletonCircle>
             </WrapItem>
             <Box flex="1">
-              <Heading size="xs" textTransform="uppercase">
-                {name}
-                <Badge ml="1" colorScheme="blue">
-                  {GiftCount} {GiftCount >= 1 ? "Gift" : "Gifts"}
-                </Badge>
-              </Heading>
-              <Text pt="2" fontSize="sm">
-                {date}
-              </Text>
+
+              <Skeleton isLoaded={!loading}>
+                <Heading size="xs" textTransform="uppercase">
+                  {name}
+                  <Badge ml="1" colorScheme="blue">
+                    {GiftCount} {GiftCount >= 1 ? "Gift" : "Gifts"}
+                  </Badge>
+                </Heading>
+              </Skeleton>
+              <Skeleton isLoaded={!loading}>
+                <Text pt="2" fontSize="sm">
+                  {date}
+                </Text>
+              </Skeleton>
             </Box>
           </Stack>
         </Box>
