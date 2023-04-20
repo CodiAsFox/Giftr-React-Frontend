@@ -7,9 +7,9 @@ import { useParams, useNavigate } from "react-router-dom";
 const Person = () => {
   const [token, setToken] = useToken();
 
-  const [page, updatePage] = usePage(null);
   const params = useParams();
   const navigate = useNavigate();
+  const [page, updatePage] = usePage();
 
   const id = params.id;
 
@@ -28,10 +28,9 @@ const Person = () => {
     });
   }, []);
 
-  // TODO: remove this useEffect after testing
   useEffect(() => {
-    console.log(page);
-  }, [page]);
+    updatePage({ ...page, page: "people/add" });
+  }, []);
 
   // clicking on SAVE button
   function savePerson() {
@@ -41,13 +40,13 @@ const Person = () => {
   }
 
   function doDelete() {
-    deletePerson(id); 
+    deletePerson(id);
   }
 
   // API GET, POST, PATCH, DELETE
   const api = import.meta.env.VITE_API_URL;
   const url = `${api}/people`;
-  
+
   function getPerson() {
     // api/people/${id}
     let endpoint = `${url}/${id}`;
@@ -65,12 +64,11 @@ const Person = () => {
         return res.json();
       })
       .then(({ data }) => {
-        console.log(data);
         return data;
       })
-      .then(({name, dob}) => {
-        dob = dob.split('T')[0];        
-        setPerson({name, dob});
+      .then(({ name, dob }) => {
+        dob = dob.split("T")[0];
+        setPerson({ name, dob });
       })
       .catch((err) => {
         console.warn(err.message);
@@ -93,10 +91,10 @@ const Person = () => {
       .then((res) => {
         if (res.status === 401) throw new Error("Unauthorized access to API.");
         if (!res.ok) throw new Error("Invalid response");
-        console.log("response: ", res);
+
         return res.json();
       })
-      .then(()=>navigate('/people'))
+      .then(() => navigate("/people"))
       .catch((err) => {
         console.warn(err.message);
         setToken(null);
@@ -119,10 +117,10 @@ const Person = () => {
       .then((res) => {
         if (res.status === 401) throw new Error("Unauthorized access to API.");
         if (!res.ok) throw new Error("Invalid response");
-        console.log("response: ", res);
+
         return res.json();
       })
-      .then(()=>navigate('/people'))
+      .then(() => navigate("/people"))
       .catch((err) => {
         console.warn(err.message);
         setToken(null);
@@ -131,7 +129,6 @@ const Person = () => {
   }
 
   function deletePerson(persId) {
-    // api/people/${id}
     let endpoint = `${url}/${persId}`;
     let request = new Request(endpoint, {
       method: "DELETE",
@@ -144,10 +141,9 @@ const Person = () => {
       .then((res) => {
         if (res.status === 401) throw new Error("Unauthorized access to API.");
         if (!res.ok) throw new Error("Invalid response");
-        console.log('res: ', res)
         return res.json();
       })
-      .then(()=>navigate('/people'))
+      .then(() => navigate("/people"))
       .catch((err) => {
         console.warn(err.message);
         setToken(null);
@@ -155,15 +151,16 @@ const Person = () => {
       });
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     if (id) {
       getPerson(); // fill the inputs with data from GET fetch
     }
-  },[]);
+  }, []);
 
   return (
     <section className="Person">
-      <h2>{id ? "You are in edit [Bob]" : "Adding a person"}</h2> {/*refine this*/}
+      <h2>{id ? "You are in edit [Bob]" : "Adding a person"}</h2>{" "}
+      {/*refine this*/}
       <form>
         <div className="formBox">
           <label htmlFor="name">Name</label>
@@ -209,8 +206,8 @@ const Person = () => {
             onClick={doDelete}
           >
             Delete
-          </Button> {/* TODO: this should be a CANCEL button if we are ADDING */}
-
+          </Button>{" "}
+          {/* TODO: this should be a CANCEL button if we are ADDING */}
         </div>
       </form>
     </section>

@@ -23,13 +23,11 @@ const Gifts = () => {
 
   useEffect(() => {
     updatePage({ ...page, page: "gifts", id: id });
-    console.log(page);
   }, []);
 
   // API Call Functions (GET, DELETE)
   const api = import.meta.env.VITE_API_URL;
   const url = `${api}/people/${id}/gifts`;
-  // console.log("person id: " + id);
 
   function getGifts() {
     let request = new Request(url, {
@@ -46,7 +44,6 @@ const Gifts = () => {
         return res.json();
       })
       .then(({ data }) => {
-        // console.log(gfts);
         return data.map((gft) => {
           const gf = {
             gift_id: gft._id,
@@ -68,7 +65,7 @@ const Gifts = () => {
   }
 
   function removeGiftFromList(giftId) {
-    let updatedGifts = gifts.filter(gift=>gift.gift_id !== giftId);
+    let updatedGifts = gifts.filter((gift) => gift.gift_id !== giftId);
     setGifts(updatedGifts);
   }
 
@@ -85,10 +82,10 @@ const Gifts = () => {
       .then((res) => {
         if (res.status === 401) throw new Error("Unauthorized access to API.");
         if (!res.ok) throw new Error("Invalid response");
-        console.log('res: ', res)
+
         return res.json();
       })
-      .then(()=>removeGiftFromList(id))
+      .then(() => removeGiftFromList(id))
       .catch((err) => {
         console.warn(err.message);
         setToken(null);

@@ -48,7 +48,6 @@ const People = () => {
       })
 
       .then(({ data }) => {
-        // console.log(data);
         return data.map((ppl) => {
           const person = {
             id: ppl._id,
@@ -60,7 +59,6 @@ const People = () => {
         });
       })
       .then((ppl) => {
-        console.log("ppl", ppl);
         setPeople(ppl);
       })
       .catch((err) => {
@@ -93,7 +91,7 @@ const People = () => {
   //     .then((res) => {
   //       if (res.status === 401) throw new Error("Unauthorized access to API.");
   //       if (!res.ok) throw new Error("Invalid response");
-  //       console.log('res: ', res)
+  //       //console.log('res: ', res)
   //       return res.json();
   //     })
   //     .then(()=>removeGiftFromList(id))
