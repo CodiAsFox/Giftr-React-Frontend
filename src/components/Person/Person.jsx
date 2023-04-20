@@ -293,7 +293,6 @@ const Person = () => {
                   {errors.name && <Text color="red.300">{errors.name}</Text>}
 
                     <FormHelperText>E.g. Bob Robertson</FormHelperText>
-                  </Skeleton>
                 </Box>
                 <Box py={2}>
                   <Skeleton isLoaded={!loading}>
