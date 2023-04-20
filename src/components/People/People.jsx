@@ -59,6 +59,8 @@ const People = () => {
         });
       })
       .then((ppl) => {
+        ppl.sort((a,b)=> b.dob > a.dob ? 1 : -1);
+        console.log("ppl", ppl);
         setPeople(ppl);
       })
       .catch((err) => {
@@ -71,37 +73,6 @@ const People = () => {
   useEffect(() => {
     getPeople();
   }, []);
-
-  // MOVE TO PERSON (EDIT)
-  // function removePersonFromList(persId) {
-  //   let updatedPeople = people.filter(person=>person.id !== persId);
-  //   setPeople(updatedPeople);
-  // }
-
-  // function deleteGift(id) {
-  //   let endpoint = `${url}/${id}`;
-  //   let request = new Request(endpoint, {
-  //     method: "DELETE",
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   });
-
-  //   fetch(request)
-  //     .then((res) => {
-  //       if (res.status === 401) throw new Error("Unauthorized access to API.");
-  //       if (!res.ok) throw new Error("Invalid response");
-  //       //console.log('res: ', res)
-  //       return res.json();
-  //     })
-  //     .then(()=>removeGiftFromList(id))
-  //     .catch((err) => {
-  //       console.warn(err.message);
-  //       setToken(null);
-  //       navigate("/");
-  //     });
-  // }
-
   return (
     <Box className="people">
       <Card borderRadius={10}>
