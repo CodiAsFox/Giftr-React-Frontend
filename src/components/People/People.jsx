@@ -54,14 +54,22 @@ const People = () => {
             id: ppl._id,
             name: ppl.name,
             dob: ppl.dob,
-            gifts: ppl.gifts,
           };
           return person;
         });
       })
       .then((ppl) => {
-        ppl.sort((a, b) => (b.dob > a.dob ? 1 : -1));
-
+        ppl.sort((a, b) => {
+          let dateA = new Date(a.dob);
+          let dateB = new Date(b.dob);
+          if (dateA.getMonth() > dateB.getMonth()) {
+            return 1;
+          } else if (dateB.getMonth() > dateA.getMonth()) {
+            return -1;
+          } else {
+            return dateA.getDate() - dateB.getDate();
+          }
+        });
         console.log("ppl", ppl);
         setPeople(ppl);
       })

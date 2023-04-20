@@ -64,26 +64,14 @@ const ListItem = (props) => {
       setLoading(false);
     }, [dob]);
 
-    // console.log(person.gifts.length);
-
-    const GiftCount = person.gifts.length;
+    // REQUIRES refactoring - API not structured for this + badge
+    // const GiftCount = person.gifts.length;
 
     return (
       <Flex>
         <Box flex="5">
           <Stack direction={["column", "row"]} spacing="24px">
-<<<<<<< Updated upstream
-            {/* <WrapItem>
-              <Avatar name={name} src={getAvatar} />
-            </WrapItem> */}
-=======
-            <WrapItem>
-              <SkeletonCircle size="48px" isLoaded={!loading}>
-                <Avatar name={name} src={getAvatar} />
-              </SkeletonCircle>
-            </WrapItem>
->>>>>>> Stashed changes
-            <Box flex="1">
+
               <Skeleton isLoaded={!loading}>
                 <Heading size="xs" textTransform="uppercase">
                   {name}
@@ -97,6 +85,7 @@ const ListItem = (props) => {
                   {date}
                 </Text>
               </Skeleton>
+
             </Box>
           </Stack>
         </Box>
