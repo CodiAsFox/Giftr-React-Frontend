@@ -3,7 +3,6 @@ import { useToken } from "../../context/TokenContext";
 import {
   Box,
   Button,
-  Heading,
   FormControl,
   FormLabel,
   Input,
@@ -22,6 +21,7 @@ import {
   CardBody,
   Stack,
   StackDivider,
+  Skeleton,
 } from "@chakra-ui/react";
 import { usePage } from "../../context/PageContext";
 import { useParams, useNavigate } from "react-router-dom";
@@ -52,6 +52,7 @@ const Person = () => {
   };
 
   const [person, setPerson] = useState({ ...shape });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     updatePage({
@@ -236,106 +237,126 @@ const Person = () => {
     if (id) {
       getPerson(); // fill the inputs with data from GET fetch
     }
+    setLoading(false);
   }, []);
 
   return (
     <Box className="Person">
       <Card borderRadius={10}>
         <CardHeader bg="pink.900" borderTopRadius={10}>
-          <Heading
-            size="lg"
-            bgGradient="linear(to-r, green.200, pink.500)"
-            bgClip="text"
-            fontSize="4xl"
-            fontWeight="extrabold"
-          >
-            <FontAwesomeIcon
-              icon={faPersonCirclePlus}
-              color="#9be59d"
-              width="3rem"
-            />
-            <Box display="inline" pl={1}>
+          <Skeleton isLoaded={!loading}>
+            <Text
+              size="lg"
+              bgGradient="linear(to-r, green.200, pink.500)"
+              bgClip="text"
+              fontSize="4xl"
+              fontWeight="extrabold"
+              display="inline-block"
+            >
+              <FontAwesomeIcon
+                icon={faPersonCirclePlus}
+                color="#25DAD6"
+                width="3rem"
+              />
+            </Text>
+            <Text
+              size="lg"
+              bgGradient="linear(to-r, teal.500, pink.300, pink.500)"
+              bgClip="text"
+              fontSize="4xl"
+              fontWeight="extrabold"
+              display="inline-block"
+              pl="3"
+            >
               {id ? `Edit ${person.name}` : "Add person"}
-            </Box>
-          </Heading>
+            </Text>
+          </Skeleton>
         </CardHeader>
         <CardBody>
           <Stack divider={<StackDivider />} spacing="4">
             <FormControl isRequired>
               <Box>
                 <Box py={2}>
-                  <FormLabel>Person's name</FormLabel>
-                  <Input
-                    type="text"
-                    name="name"
-                    maxLength="80"
-                    placeholder="Person's name"
-                    value={`${person.name}`}
-                    onChange={(ev) => {
-                      setPerson({ ...person, name: ev.target.value });
-                    }}
-                    required
-                  />
-                  {errors.name && <Text color="red.300">{errors.name}</Text>}
+                  <Skeleton isLoaded={!loading}>
+                    <FormLabel>Person's name</FormLabel>
+                    <Input
+                      type="text"
+                      name="name"
+                      maxLength="80"
+                      placeholder="Person's name"
+                      value={`${person.name}`}
+                      onChange={(ev) => {
+                        setPerson({ ...person, name: ev.target.value });
+                        handleInputChange(ev);
+                      }}
+                      required
+                    />
+                    {errors.name && <Text color="red.300">{errors.name}</Text>}
 
-                  <FormHelperText>E.g. Bob Robertson</FormHelperText>
+                    <FormHelperText>E.g. Bob Robertson</FormHelperText>
+                  </Skeleton>
+
                 </Box>
                 <Box py={2}>
-                  <FormLabel>Birthdate</FormLabel>
-                  <Input
-                    placeholder="Select Date and Time"
-                    size="md"
-                    type="date"
-                    id="dob"
-                    name="dob"
-                    pattern="\d{4}-\d{2}-\d{2}"
-                    value={`${person.dob}`}
-                    onChange={(ev) =>
-                      setPerson({ ...person, dob: ev.target.value })
-                    }
-                    required
-                  />
-                  {errors.dob && <Text color="red.300">{errors.dob}</Text>}
+                  <Skeleton isLoaded={!loading}>
+                    <FormLabel>Birthdate</FormLabel>
+                    <Input
+                      placeholder="Select Date and Time"
+                      size="md"
+                      type="date"
+                      id="dob"
+                      name="dob"
+                      pattern="\d{4}-\d{2}-\d{2}"
+                      value={`${person.dob}`}
+                      onChange={(ev) =>
+                        setPerson({ ...person, dob: ev.target.value })
+                      }
+                      required
+                    />
+                    {errors.dob && <Text color="red.300">{errors.dob}</Text>}
+                  </Skeleton>
                 </Box>
               </Box>
               <Box className="formBox" pt={4}>
-                <Button
-                  colorScheme="green"
-                  as={"a"}
-                  fontSize={"sm"}
-                  fontWeight={600}
-                  mr={3}
-                  onClick={savePerson}
-                >
-                  <FontAwesomeIcon icon={faFloppyDisk} />
-                  <Text pl={1}>Save</Text>
-                </Button>
-                {id ? (
+                <Skeleton isLoaded={!loading}>
                   <Button
-                    colorScheme="red"
+                    colorScheme="green"
                     as={"a"}
                     fontSize={"sm"}
                     fontWeight={600}
                     mr={3}
-                    onClick={onOpen}
+                    onClick={savePerson}
                   >
-                    <DeleteConfirm />
-                    <FontAwesomeIcon icon={faTrash} />
-                    <Text pl={1}>Delete</Text>
+                    <FontAwesomeIcon icon={faFloppyDisk} />
+                    <Text pl={1}>Save</Text>
                   </Button>
-                ) : (
-                  <Button
-                    colorScheme="red"
-                    as={"a"}
-                    fontSize={"sm"}
-                    fontWeight={600}
-                    mr={3}
-                    href="/people"
-                  >
-                    <FontAwesomeIcon icon={faRectangleXmark} />
-                    <Text pl={1}>Cancel</Text>
-                  </Button>
-                )}
+                  {id ? (
+                    <Button
+                      colorScheme="red"
+                      as={"a"}
+                      fontSize={"sm"}
+                      fontWeight={600}
+                      mr={3}
+                      onClick={onOpen}
+                    >
+                      <DeleteConfirm />
+                      <FontAwesomeIcon icon={faTrash} />
+                      <Text pl={1}>Delete</Text>
+                    </Button>
+                  ) : (
+                    <Button
+                      colorScheme="red"
+                      as={"a"}
+                      fontSize={"sm"}
+                      fontWeight={600}
+                      mr={3}
+                      href="/people"
+                    >
+                      <FontAwesomeIcon icon={faRectangleXmark} />
+                      <Text pl={1}>Cancel</Text>
+                    </Button>
+                  )}
+                </Skeleton>
               </Box>
             </FormControl>
           </Stack>
