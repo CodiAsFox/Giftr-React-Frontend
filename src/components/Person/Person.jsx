@@ -48,7 +48,7 @@ const Person = () => {
 
   function doDelete() {
     deletePerson(id); 
-    navigate('/people'); //TODO: deletePerson is working but we navigate to /people before it has gone through and then the person is still on the list
+    //navigate('/people'); //TODO: deletePerson is working but we navigate to /people before it has gone through and then the person is still on the list
   }
 
   // API GET, POST, PATCH, DELETE
@@ -140,6 +140,7 @@ const Person = () => {
         console.log('res: ', res)
         return res.json();
       })
+      .then(()=>navigate('/people'))
       .catch((err) => {
         console.warn(err.message);
         setToken(null);
