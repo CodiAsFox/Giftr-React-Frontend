@@ -80,9 +80,9 @@ const ListItem = (props) => {
             <Box flex="1">
               <Heading size="xs" textTransform="uppercase">
                 {name}
-                {/* <Badge ml="1" colorScheme="blue">
+                <Badge ml="1" colorScheme="blue">
                   {GiftCount} {GiftCount >= 1 ? "Gift" : "Gifts"}
-                </Badge> */}
+                </Badge>
               </Heading>
               <Text pt="2" fontSize="sm">
                 {date}
