@@ -59,8 +59,8 @@ const People = () => {
         });
       })
       .then((ppl) => {
-        ppl.sort((a,b)=> b.dob > a.dob ? 1 : -1);
-        
+        ppl.sort((a, b) => (b.dob > a.dob ? 1 : -1));
+
         console.log("ppl", ppl);
         setPeople(ppl);
       })
@@ -75,7 +75,7 @@ const People = () => {
     getPeople();
   }, []);
   return (
-    <Box className="people">
+    <Box className="people" w="100%">
       <Card borderRadius={10}>
         <CardHeader bg="pink.900" borderTopRadius={10}>
           <Heading

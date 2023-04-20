@@ -4,17 +4,30 @@ import {
   Text,
   Heading,
   Stack,
+  HStack,
   Button,
   Flex,
   WrapItem,
   Avatar,
   Badge,
+  Link,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
 } from "@chakra-ui/react";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPenToSquare,
   faGifts,
   faTrash,
+  faShop,
+  faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { AvatarGenerator } from "random-avatar-generator";
@@ -42,7 +55,9 @@ const ListItem = (props) => {
     }
 
     useEffect(() => {
-      setDate(jsDate.toLocaleDateString("en", { month: 'long', day: 'numeric'}));
+      setDate(
+        jsDate.toLocaleDateString("en", { month: "long", day: "numeric" })
+      );
     }, [dob]);
 
     // console.log(person.gifts.length);
@@ -101,33 +116,87 @@ const ListItem = (props) => {
       deleteItem(gift_id);
     }
 
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    function DeleteConfirm({ giftId }) {
+      console.log(giftId);
+      return (
+        <>
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Do you want to delete {gift_name}?</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                This action will permanently delete the gift and all it's data.
+                This action is irreversible.
+              </ModalBody>
+
+              <ModalFooter>
+                <Button colorScheme="blue" mr={3} onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button colorScheme="red" onClick={() => doDelete(giftId)}>
+                  Confirm
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </>
+      );
+    }
+
     return (
       <Flex>
         <Box flex="5">
-          <Heading size="xs" textTransform="uppercase">
-            {gift_name}
-          </Heading>
-          <Text pt="2" fontSize="sm">
-            {store}
-          </Text>
-          <Text pt="2" fontSize="sm">
-            {url}
-          </Text>
+          <Box flex="1">
+            <Text size="md" textTransform="uppercase">
+              {gift_name}
+            </Text>
+            <Stack direction="row" spacing={4} align="top" flex="1" pt={3}>
+              <Box>
+                <HStack bg="green.700" p="5px 15px" borderRadius={20}>
+                  <Flex alignItems="center" fontSize="sm">
+                    <FontAwesomeIcon icon={faShop} />
+                    <Text pl={2} fontWeight="bold" fontSize="sm">
+                      {store}
+                    </Text>
+                  </Flex>
+                </HStack>
+              </Box>
+              <Box>
+                <Link href="{url}" isExternal>
+                  <HStack bg="orange.600" p="5px 15px" borderRadius={20}>
+                    {url}
+                    <Flex alignItems="center" fontSize="sm">
+                      <FontAwesomeIcon icon={faGlobe} />
+                      <Text pl={2} fontWeight="bold" fontSize="sm">
+                        View website <ExternalLinkIcon mx="2px" />
+                      </Text>
+                    </Flex>
+                  </HStack>
+                </Link>
+              </Box>
+            </Stack>
+          </Box>
         </Box>
-        <Stack direction="row" spacing={4} align="center" flex="1">
-          <Button
-            colorScheme="blue"
-            onClick={() => doEdit(id, gift_id)}
-            data-person={id}
-          >
-            <FontAwesomeIcon icon={faPenToSquare} />
-            <Text pl={1}>Edit</Text>
-          </Button>
-          <Button colorScheme="red" onClick={() => doDelete(gift_id)}>
-            <FontAwesomeIcon icon={faTrash} />
-            <Text pl={1}>Delete</Text>
-          </Button>
-        </Stack>
+        <Box>
+          <Stack direction="row" spacing={4} align="center" flex="1">
+            <Button
+              colorScheme="blue"
+              onClick={() => doEdit(id, gift_id)}
+              data-person={id}
+            >
+              <FontAwesomeIcon icon={faPenToSquare} />
+              <Text pl={1}>Edit</Text>
+            </Button>
+
+            <Button colorScheme="red" onClick={onOpen}>
+              <DeleteConfirm giftId={gift_id} />
+              <FontAwesomeIcon icon={faTrash} />
+              <Text pl={1}>Delete</Text>
+            </Button>
+          </Stack>
+        </Box>
       </Flex>
     );
   }

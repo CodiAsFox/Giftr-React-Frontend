@@ -17,9 +17,21 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
+  Card,
+  CardHeader,
+  CardBody,
+  Stack,
+  StackDivider,
 } from "@chakra-ui/react";
 import { usePage } from "../../context/PageContext";
 import { useParams, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPersonCirclePlus,
+  faFloppyDisk,
+  faTrash,
+  faRectangleXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Person = () => {
   const [token, setToken] = useToken();
@@ -228,75 +240,108 @@ const Person = () => {
 
   return (
     <Box className="Person">
-      <Heading>{id ? `Edit ${person.name}` : "Add person"}</Heading>
-      <FormControl isRequired>
-        <FormLabel>Person's name</FormLabel>
-        <Input
-          type="text"
-          name="name"
-          maxLength="80"
-          placeholder="Person's name"
-          value={`${person.name}`}
-          onChange={(ev) => {
-            setPerson({ ...person, name: ev.target.value });
-            handleInputChange(ev);
-          }}
-          required
-        />
-        {errors.name && <Text color="red.300">{errors.name}</Text>}
-
-        <FormHelperText>E.g. Bob Robertson</FormHelperText>
-        <FormLabel>Birthdate</FormLabel>
-        <Input
-          placeholder="Select Date and Time"
-          size="md"
-          type="date"
-          id="dob"
-          name="dob"
-          pattern="\d{4}-\d{2}-\d{2}"
-          value={`${person.dob}`}
-          onChange={(ev) => setPerson({ ...person, dob: ev.target.value })}
-          required
-        />
-        {errors.dob && <Text color="red.300">{errors.dob}</Text>}
-
-        <div className="formBox">
-          <Button
-            colorScheme="teal"
-            as={"a"}
-            fontSize={"sm"}
-            fontWeight={600}
-            mr={3}
-            onClick={savePerson}
+      <Card borderRadius={10}>
+        <CardHeader bg="pink.900" borderTopRadius={10}>
+          <Heading
+            size="lg"
+            bgGradient="linear(to-r, green.200, pink.500)"
+            bgClip="text"
+            fontSize="4xl"
+            fontWeight="extrabold"
           >
-            Save
-          </Button>
-          {id ? (
-            <Button
-              colorScheme="teal"
-              as={"a"}
-              fontSize={"sm"}
-              fontWeight={600}
-              mr={3}
-              onClick={onOpen}
-            >
-              <DeleteConfirm />
-              Delete
-            </Button>
-          ) : (
-            <Button
-              colorScheme="teal"
-              as={"a"}
-              fontSize={"sm"}
-              fontWeight={600}
-              mr={3}
-              href="/people"
-            >
-              Cancel
-            </Button>
-          )}
-        </div>
-      </FormControl>
+            <FontAwesomeIcon
+              icon={faPersonCirclePlus}
+              color="#9be59d"
+              width="3rem"
+            />
+            <Box display="inline" pl={1}>
+              {id ? `Edit ${person.name}` : "Add person"}
+            </Box>
+          </Heading>
+        </CardHeader>
+        <CardBody>
+          <Stack divider={<StackDivider />} spacing="4">
+            <FormControl isRequired>
+              <Box>
+                <Box py={2}>
+                  <FormLabel>Person's name</FormLabel>
+                  <Input
+                    type="text"
+                    name="name"
+                    maxLength="80"
+                    placeholder="Person's name"
+                    value={`${person.name}`}
+                    onChange={(ev) => {
+                      setPerson({ ...person, name: ev.target.value });
+                      handleInputChange(ev);
+                    }}
+                    required
+                  />
+                  {errors.name && <Text color="red.300">{errors.name}</Text>}
+
+                  <FormHelperText>E.g. Bob Robertson</FormHelperText>
+                </Box>
+                <Box py={2}>
+                  <FormLabel>Birthdate</FormLabel>
+                  <Input
+                    placeholder="Select Date and Time"
+                    size="md"
+                    type="date"
+                    id="dob"
+                    name="dob"
+                    pattern="\d{4}-\d{2}-\d{2}"
+                    value={`${person.dob}`}
+                    onChange={(ev) =>
+                      setPerson({ ...person, dob: ev.target.value })
+                    }
+                    required
+                  />
+                  {errors.dob && <Text color="red.300">{errors.dob}</Text>}
+                </Box>
+              </Box>
+              <Box className="formBox" pt={4}>
+                <Button
+                  colorScheme="green"
+                  as={"a"}
+                  fontSize={"sm"}
+                  fontWeight={600}
+                  mr={3}
+                  onClick={savePerson}
+                >
+                  <FontAwesomeIcon icon={faFloppyDisk} />
+                  <Text pl={1}>Save</Text>
+                </Button>
+                {id ? (
+                  <Button
+                    colorScheme="red"
+                    as={"a"}
+                    fontSize={"sm"}
+                    fontWeight={600}
+                    mr={3}
+                    onClick={onOpen}
+                  >
+                    <DeleteConfirm />
+                    <FontAwesomeIcon icon={faTrash} />
+                    <Text pl={1}>Delete</Text>
+                  </Button>
+                ) : (
+                  <Button
+                    colorScheme="red"
+                    as={"a"}
+                    fontSize={"sm"}
+                    fontWeight={600}
+                    mr={3}
+                    href="/people"
+                  >
+                    <FontAwesomeIcon icon={faRectangleXmark} />
+                    <Text pl={1}>Cancel</Text>
+                  </Button>
+                )}
+              </Box>
+            </FormControl>
+          </Stack>
+        </CardBody>
+      </Card>
     </Box>
   );
   // else edit person

@@ -6,6 +6,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   Image,
+  Container,
 } from "@chakra-ui/react";
 import { SkipNavLink } from "@chakra-ui/skip-nav";
 import CheckToken from "../../auth/CheckToken";
@@ -14,19 +15,21 @@ import Back from "../Back/Back";
 
 export default function WithSubnavigation() {
   return (
-    <Box>
-      <SkipNavLink zIndex={1}>Skip to content</SkipNavLink>
-      <Flex
-        bg={useColorModeValue("white", "blue.900")}
-        color={useColorModeValue("gray.600", "white")}
-        minH={"60px"}
-        py={{ base: 2 }}
-        px={{ base: 4 }}
-        borderBottom={1}
-        borderStyle={"solid"}
-        borderColor={useColorModeValue("gray.200", "gray.900")}
-        align={"center"}
+    <Box
+      bg={useColorModeValue("white", "blue.900")}
+      color={useColorModeValue("gray.600", "white")}
+    >
+      <Container
+        as={Stack}
+        maxW={"6xl"}
+        py={4}
+        direction={{ base: "column", xs: "row" }}
+        spacing={4}
+        justify={{ base: "center", xs: "space-between" }}
+        align={{ base: "center", md: "center" }}
       >
+        <SkipNavLink zIndex={1}>Skip to content</SkipNavLink>
+
         <Flex flex={{ base: 1 }} justify={"flex-start"}>
           <Back />
         </Flex>
@@ -48,7 +51,7 @@ export default function WithSubnavigation() {
           <CheckToken />
           <Nav />
         </Stack>
-      </Flex>
+      </Container>
     </Box>
   );
 }
