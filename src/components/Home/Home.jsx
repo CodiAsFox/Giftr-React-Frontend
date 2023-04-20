@@ -6,13 +6,14 @@ import {
   CardBody,
   Heading,
   CardFooter,
-  Button,
+  Box,
   Text,
 } from "@chakra-ui/react";
+import HomeBoxes from "../HomeBox/HomeBox";
 
 const Home = () => {
   return (
-    <section className="Home">
+    <Box className="Home">
       <Card align="center">
         <CardHeader>
           <Heading size="md"> Welcome to Giftr!</Heading>
@@ -24,7 +25,8 @@ const Home = () => {
           <Login label="Login with Google" colour="cyan" icon="true" />
         </CardFooter>
       </Card>
-    </section>
+      <HomeBoxes />
+    </Box>
   );
 };
 

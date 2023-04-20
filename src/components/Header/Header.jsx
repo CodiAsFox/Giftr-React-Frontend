@@ -30,13 +30,13 @@ export default function WithSubnavigation() {
         <Flex flex={{ base: 1 }} justify={"flex-start"}>
           <Back />
         </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
+        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "center" }}>
           <Text
-            textAlign={useBreakpointValue({ base: "center", md: "left" })}
+            textAlign={useBreakpointValue({ base: "center", md: "center" })}
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
           ></Text>
-          <Image src="./logo/logo.svg" w={185} />
+          <Image src="./logo.svg" w={185} />
         </Flex>
 
         <Stack
@@ -45,19 +45,6 @@ export default function WithSubnavigation() {
           direction={"row"}
           spacing={6}
         >
-          {/* <Button
-            as={"a"}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"pink.400"}
-            href={"#"}
-            _hover={{
-              bg: "pink.300",
-            }}
-          >
-            Sign Up
-          </Button> */}
           <CheckToken />
           <Nav />
         </Stack>

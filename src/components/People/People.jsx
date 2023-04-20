@@ -48,7 +48,6 @@ const People = () => {
       })
 
       .then(({ data }) => {
-        // console.log(data);
         return data.map((ppl) => {
           const person = {
             id: ppl._id,
@@ -61,7 +60,6 @@ const People = () => {
       })
       .then((ppl) => {
         ppl.sort((a,b)=> b.dob > a.dob ? 1 : -1);
-        // console.log(`${sortedPpl}`)
         console.log("ppl", ppl);
         setPeople(ppl);
       })
@@ -75,7 +73,6 @@ const People = () => {
   useEffect(() => {
     getPeople();
   }, []);
-
   return (
     <Box className="people">
       <Card borderRadius={10}>
