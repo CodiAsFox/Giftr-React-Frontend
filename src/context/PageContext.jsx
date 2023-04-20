@@ -13,7 +13,6 @@ function GiftrProvider(props) {
 
   const updatePage = (pge) => {
     setPage(pge);
-    console.log(pge);
   };
 
   return <PageContext.Provider value={[page, updatePage]} {...props} />;

@@ -1,37 +1,28 @@
-import { useState, useEffect } from "react";
-import { useToken } from "../../context/TokenContext";
 import {
   Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  FormHelperText,
-  Text,
-  useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
   Card,
-  CardHeader,
   CardBody,
+  CardHeader,
+  FormControl,
+  Heading,
+  Skeleton,
   Stack,
   StackDivider,
-  Skeleton,
+  Text,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { usePage } from "../../context/PageContext";
-import { useParams, useNavigate } from "react-router-dom";
+import { faPersonCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPersonCirclePlus,
-  faFloppyDisk,
-  faTrash,
-  faRectangleXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import usePersonAPI from "../../api/usePersonAPI";
+import CheckToken from "../../auth/CheckToken";
+import { usePage } from "../../context/PageContext";
+import { useToken } from "../../context/TokenContext";
+import DeleteConfirm from "./Form/DeleteConfirm";
+import PersonActions from "./Form/Actions";
+import DateField from "./Form/DateField";
+import NameField from "./Form/NameField";
 
 const Person = () => {
   const [token, setToken] = useToken();
@@ -101,137 +92,18 @@ const Person = () => {
   const api = import.meta.env.VITE_API_URL;
   const url = `${api}/people`;
 
-  function getPerson() {
-    // api/people/${id}
-    let endpoint = `${url}/${id}`;
-    let request = new Request(endpoint, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    fetch(request)
-      .then((res) => {
-        if (res.status === 401) throw new Error("Unauthorized access to API.");
-        if (!res.ok) throw new Error("Invalid response");
-        return res.json();
-      })
-      .then(({ data }) => {
-        return data;
-      })
-      .then(({ name, dob }) => {
-        dob = dob.split("T")[0];
-        setPerson({ name, dob });
-      })
-      .catch((err) => {
-        console.warn(err.message);
-        setToken(null);
-        navigate("/");
-      });
-  }
-
-  function postPerson(data) {
-    let request = new Request(url, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    fetch(request)
-      .then((res) => {
-        if (res.status === 401) throw new Error("Unauthorized access to API.");
-        if (!res.ok) throw new Error("Invalid response");
-
-        return res.json();
-      })
-      .then(() => navigate("/people"))
-      .catch((err) => {
-        console.warn(err.message);
-        setToken(null);
-        navigate("/");
-      });
-  }
-
-  function updatePerson(data) {
-    let endpoint = `${url}/${id}`;
-    let request = new Request(endpoint, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    fetch(request)
-      .then((res) => {
-        if (res.status === 401) throw new Error("Unauthorized access to API.");
-        if (!res.ok) throw new Error("Invalid response");
-
-        return res.json();
-      })
-      .then(() => navigate("/people"))
-      .catch((err) => {
-        console.warn(err.message);
-        setToken(null);
-        navigate("/");
-      });
-  }
-
-  function deletePerson(persId) {
-    let endpoint = `${url}/${persId}`;
-    let request = new Request(endpoint, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    fetch(request)
-      .then((res) => {
-        if (res.status === 401) throw new Error("Unauthorized access to API.");
-        if (!res.ok) throw new Error("Invalid response");
-        return res.json();
-      })
-      .then(() => navigate("/people"))
-      .catch((err) => {
-        console.warn(err.message);
-        setToken(null);
-        navigate("/");
-      });
-  }
-
   const { isOpen, onOpen, onClose } = useDisclosure();
-  function DeleteConfirm() {
-    return (
-      <>
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Do you want to delete {person.name}?</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              This action will permanently delete the person and all associated
-              saved gifts from your list. This action is irreversible.
-            </ModalBody>
 
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme="red" onClick={doDelete}>
-                Confirm
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </>
-    );
-  }
+  const { getPerson, postPerson, updatePerson, deletePerson } = usePersonAPI(
+    token,
+    setToken,
+    id,
+    url,
+    navigate,
+    setPerson
+  );
+
+  const personName = person.name;
 
   useEffect(() => {
     if (id) {
@@ -242,6 +114,7 @@ const Person = () => {
 
   return (
     <Box className="Person">
+      <CheckToken />
       <Card borderRadius={10}>
         <CardHeader bg="pink.900" borderTopRadius={10}>
           <Skeleton isLoaded={!loading}>
@@ -259,7 +132,7 @@ const Person = () => {
                 width="3rem"
               />
             </Text>
-            <Text
+            <Heading
               size="lg"
               bgGradient="linear(to-r, teal.500, pink.300, pink.500)"
               bgClip="text"
@@ -268,100 +141,37 @@ const Person = () => {
               display="inline-block"
               pl="3"
             >
-              {id ? `Edit ${person.name}` : "Add person"}
-            </Text>
+              {id ? `Edit ${personName}` : "Add person"}
+            </Heading>
           </Skeleton>
         </CardHeader>
         <CardBody>
           <Stack divider={<StackDivider />} spacing="4">
             <FormControl isRequired>
-              <Box>
-                <Box py={2}>
-                  <Skeleton isLoaded={!loading}>
-                    <FormLabel>Person's name</FormLabel>
-                    <Input
-                      type="text"
-                      name="name"
-                      maxLength="80"
-                      placeholder="Person's name"
-                      value={`${person.name}`}
-                      onChange={(ev) => {
-                        setPerson({ ...person, name: ev.target.value });
-                        handleInputChange(ev);
-                      }}
-                      required
-                    />
-                    {errors.name && <Text color="red.300">{errors.name}</Text>}
-
-                    <FormHelperText>E.g. Bob Robertson</FormHelperText>
-                  </Skeleton>
-
-                </Box>
-                <Box py={2}>
-                  <Skeleton isLoaded={!loading}>
-                    <FormLabel>Birthdate</FormLabel>
-                    <Input
-                      placeholder="Select Date and Time"
-                      size="md"
-                      type="date"
-                      id="dob"
-                      name="dob"
-                      pattern="\d{4}-\d{2}-\d{2}"
-                      value={`${person.dob}`}
-                      onChange={(ev) =>
-                        setPerson({ ...person, dob: ev.target.value })
-                      }
-                      required
-                    />
-                    {errors.dob && <Text color="red.300">{errors.dob}</Text>}
-                  </Skeleton>
-                </Box>
-              </Box>
-              <Box className="formBox" pt={4}>
-                <Skeleton isLoaded={!loading}>
-                  <Button
-                    colorScheme="green"
-                    as={"a"}
-                    fontSize={"sm"}
-                    fontWeight={600}
-                    mr={3}
-                    onClick={savePerson}
-                  >
-                    <FontAwesomeIcon icon={faFloppyDisk} />
-                    <Text pl={1}>Save</Text>
-                  </Button>
-                  {id ? (
-                    <Button
-                      colorScheme="red"
-                      as={"a"}
-                      fontSize={"sm"}
-                      fontWeight={600}
-                      mr={3}
-                      onClick={onOpen}
-                    >
-                      <DeleteConfirm />
-                      <FontAwesomeIcon icon={faTrash} />
-                      <Text pl={1}>Delete</Text>
-                    </Button>
-                  ) : (
-                    <Button
-                      colorScheme="red"
-                      as={"a"}
-                      fontSize={"sm"}
-                      fontWeight={600}
-                      mr={3}
-                      href="/people"
-                    >
-                      <FontAwesomeIcon icon={faRectangleXmark} />
-                      <Text pl={1}>Cancel</Text>
-                    </Button>
-                  )}
-                </Skeleton>
-              </Box>
+              <NameField
+                person={person}
+                setPerson={setPerson}
+                loading={loading}
+                errors={errors}
+              />
+              <DateField
+                person={person}
+                setPerson={setPerson}
+                loading={loading}
+                errors={errors}
+              />
+              <PersonActions id={id} savePerson={savePerson} onOpen={onOpen} />
+              <Box className="formBox" pt={4}></Box>
             </FormControl>
           </Stack>
         </CardBody>
       </Card>
+      <DeleteConfirm
+        isOpen={isOpen}
+        onClose={onClose}
+        doDelete={doDelete}
+        person={person}
+      />
     </Box>
   );
   // else edit person

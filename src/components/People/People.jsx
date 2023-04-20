@@ -8,6 +8,8 @@ import {
   Skeleton,
   Stack,
   StackDivider,
+  Heading,
+  useToast,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
@@ -15,6 +17,7 @@ import BoxListItem from "../BoxListItem/BoxListItem";
 import { useNavigate } from "react-router-dom";
 import { useToken } from "../../context/TokenContext";
 import { usePage } from "../../context/PageContext";
+import CheckToken from "../../auth/CheckToken";
 
 const People = () => {
   const [people, setPeople] = useState([]);
@@ -33,6 +36,28 @@ const People = () => {
   const api = import.meta.env.VITE_API_URL;
   const url = `${api}/people`;
 
+  const toast = useToast();
+  function Unauthorized() {
+    toast({
+      title: "Session Invalid",
+      description: "You need to login to view that page.",
+      status: "error",
+      position: "top-right",
+      duration: 9000,
+      isClosable: true,
+    });
+  }
+  function Toast(title, desc) {
+    toast({
+      title: title,
+      description: desc,
+      status: "error",
+      position: "top-right",
+      duration: 9000,
+      isClosable: true,
+    });
+  }
+
   function getPeople() {
     let request = new Request(url, {
       method: "GET",
@@ -43,7 +68,12 @@ const People = () => {
 
     fetch(request)
       .then((res) => {
-        if (res.status === 401) throw new Error("Unauthorized access to API.");
+        if (res.status === 401) {
+          Unauthorized();
+          setToken(null);
+          navigate("/");
+          throw new Error("Unauthorized access to API.");
+        }
         if (!res.ok) throw new Error("Invalid response");
         return res.json();
       })
@@ -75,8 +105,7 @@ const People = () => {
       })
       .catch((err) => {
         console.warn(err.message);
-        setToken(null);
-        navigate("/");
+        Toast("Something went wrong", err.message);
       });
   }
 
@@ -86,6 +115,7 @@ const People = () => {
   }, []);
   return (
     <Box className="people" w="100%">
+      <CheckToken />
       <Card borderRadius={10}>
         <CardHeader bg="pink.900" borderTopRadius={10}>
           <Text
@@ -102,7 +132,7 @@ const People = () => {
               width="3rem"
             />
           </Text>
-          <Text
+          <Heading
             size="lg"
             bgGradient="linear(to-r, teal.500, pink.300, pink.500)"
             bgClip="text"
@@ -112,7 +142,7 @@ const People = () => {
             pl="3"
           >
             People List
-          </Text>
+          </Heading>
         </CardHeader>
         <CardBody>
           <Skeleton isLoaded={!loading}>

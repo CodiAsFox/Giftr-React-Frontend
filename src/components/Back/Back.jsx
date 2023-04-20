@@ -1,6 +1,6 @@
-import { Button, Box, Text } from "@chakra-ui/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Box, Button, Text } from "@chakra-ui/react";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePage } from "../../context/PageContext";
 
 const Back = () => {
