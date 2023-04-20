@@ -273,7 +273,6 @@ const Person = () => {
                     value={`${person.name}`}
                     onChange={(ev) => {
                       setPerson({ ...person, name: ev.target.value });
-                      handleInputChange(ev);
                     }}
                     required
                   />
