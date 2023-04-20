@@ -64,15 +64,9 @@ const ListItem = (props) => {
       setLoading(false);
     }, [dob]);
 
-<<<<<<< HEAD
-    // REQUIRES refactoring - API not structured for this + badge
-    // const GiftCount = person.gifts.length;
-    const GiftCount = person.giftCount;
-=======
     // console.log(person.gifts.length);
 
-    const GiftCount = person.gifts.length;
->>>>>>> cf87979 (Fixed missing tag)
+    const GiftCount = person.giftCount;
 
     return (
       <Flex>
@@ -80,11 +74,10 @@ const ListItem = (props) => {
           <Stack direction={["column", "row"]} spacing="24px">
             <WrapItem>
               <SkeletonCircle size="48px" isLoaded={!loading}>
-                <Avatar name={name} src={getAvatar} />
+                {/* <Avatar name={name} src={getAvatar} /> */}
               </SkeletonCircle>
             </WrapItem>
             <Box flex="1">
-
               <Skeleton isLoaded={!loading}>
                 <Heading size="xs" textTransform="uppercase">
                   {name}
