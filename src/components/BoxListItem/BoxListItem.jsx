@@ -1,5 +1,15 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, Text, Heading, Stack, Button, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Heading,
+  Stack,
+  Button,
+  Flex,
+  WrapItem,
+  Avatar,
+  Badge,
+} from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPenToSquare,
@@ -7,6 +17,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
+import { AvatarGenerator } from "random-avatar-generator";
 
 const ListItem = (props) => {
   const navigate = useNavigate();
@@ -20,6 +31,8 @@ const ListItem = (props) => {
     const { id, name, dob } = person;
     const jsDate = new Date(dob);
     const [date, setDate] = useState(null);
+    const generator = new AvatarGenerator();
+    const getAvatar = generator.generateRandomAvatar();
 
     function doEdit(id) {
       navigate(`/people/${id}`);
@@ -32,36 +45,51 @@ const ListItem = (props) => {
       setDate(jsDate.toLocaleDateString("en", { month: 'long', day: 'numeric'}));
     }, [dob]);
 
+    // console.log(person.gifts.length);
+
+    const GiftCount = person.gifts.length;
+
     return (
       <Flex>
         <Box flex="5">
-          <Heading size="xs" textTransform="uppercase">
-            {name}
-          </Heading>
-          <Text pt="2" fontSize="sm">
-            {date}
-          </Text>
+          <Stack direction={["column", "row"]} spacing="24px">
+            <WrapItem>
+              <Avatar name={name} src={getAvatar} />
+            </WrapItem>
+            <Box flex="1">
+              <Heading size="xs" textTransform="uppercase">
+                {name}
+                <Badge ml="1" colorScheme="blue">
+                  {GiftCount} {GiftCount >= 1 ? "Gift" : "Gifts"}
+                </Badge>
+              </Heading>
+              <Text pt="2" fontSize="sm">
+                {date}
+              </Text>
+            </Box>
+          </Stack>
         </Box>
-        <Stack direction="row" spacing={4} align="center" flex="1">
-          <Button
-            colorScheme="blue"
-            onClick={() => doEdit(id)}
-            data-person={id}
-          >
-            <FontAwesomeIcon icon={faPenToSquare} />
-            <Text pl={1}>Edit</Text>
-          </Button>
-          <Button colorScheme="purple" onClick={() => doGifts(id)}>
-            <FontAwesomeIcon icon={faGifts} />
-            <Text pl={1}>View Gifts</Text>
-          </Button>
-        </Stack>
+        <Box>
+          <Stack direction="row" spacing={4} align="center" flex="1">
+            <Button
+              colorScheme="blue"
+              onClick={() => doEdit(id)}
+              data-person={id}
+            >
+              <FontAwesomeIcon icon={faPenToSquare} />
+              <Text pl={1}>Edit</Text>
+            </Button>
+            <Button colorScheme="purple" onClick={() => doGifts(id)}>
+              <FontAwesomeIcon icon={faGifts} />
+              <Text pl={1}>View Gifts</Text>
+            </Button>
+          </Stack>
+        </Box>
       </Flex>
     );
   }
 
   if (gift) {
-    // /:id/gifts (list)
     const { id } = useParams();
     const { gift_id, gift_name, store, url } = gift;
 

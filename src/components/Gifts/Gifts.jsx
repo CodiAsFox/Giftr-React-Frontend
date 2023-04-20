@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+
 import { useToken } from "../../context/TokenContext";
 import { usePage } from "../../context/PageContext";
-
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -10,6 +10,7 @@ import {
   Heading,
   Stack,
   StackDivider,
+  Text,
 } from "@chakra-ui/react";
 import BoxListItem from "../BoxListItem/BoxListItem";
 
@@ -20,6 +21,12 @@ const Gifts = () => {
   const { id } = useParams();
 
   const [page, updatePage] = usePage();
+  const shape = {
+    name: "",
+    dob: "",
+  };
+
+  const [person, setPerson] = useState({ ...shape });
 
   useEffect(() => {
     updatePage({ ...page, page: "gifts", id: id });
@@ -64,6 +71,36 @@ const Gifts = () => {
       });
   }
 
+  const urlPerson = `${api}/people`;
+  console.log(urlPerson, token);
+  function getPerson() {
+    let endpoint = `${urlPerson}/${id}`;
+    let request = new Request(endpoint, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    fetch(request)
+      .then((res) => {
+        if (res.status === 401) throw new Error("Unauthorized access to API.");
+        if (!res.ok) throw new Error("Invalid response");
+        return res.json();
+      })
+      .then(({ data }) => {
+        return data;
+      })
+      .then(({ name, dob }) => {
+        dob = dob.split("T")[0];
+        setPerson({ name, dob });
+      })
+      .catch((err) => {
+        console.warn(err.message);
+        setToken(null);
+      });
+  }
+
   function removeGiftFromList(giftId) {
     let updatedGifts = gifts.filter((gift) => gift.gift_id !== giftId);
     setGifts(updatedGifts);
@@ -92,10 +129,14 @@ const Gifts = () => {
         navigate("/");
       });
   }
-
+  console.log(person);
+  useEffect(() => {
+    getPerson();
+  }, []);
   useEffect(() => {
     getGifts();
-  }, []);
+    console.log(person);
+  }, [person]);
 
   return (
     <section className="gifts">
@@ -105,8 +146,14 @@ const Gifts = () => {
         </CardHeader>
         <CardBody>
           <Stack divider={<StackDivider />} spacing="4">
+            {!gifts[0] ? (
+              <Text>
+                There's not Gifts for <strong>{person.name}</strong>!
+              </Text>
+            ) : (
+              "=D"
+            )}
             {gifts.map((gift) => (
-              // <BoxListItem key={gift.gift_id} gift={gift} apiUrl={url} />
               <BoxListItem
                 key={gift.gift_id}
                 gift={gift}
