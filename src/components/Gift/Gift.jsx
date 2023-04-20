@@ -56,12 +56,19 @@ const Gift = () => {
   }, []);
 
   function saveGift() {
+    const validatedGift = {...gift};
+    if(!gift.url.startsWith('https://')) {
+      let urlPrefix = 'https://';
+      validatedGift.url = urlPrefix + validatedGift.url;
+      setGift(validatedGift);
+    }
+
     if (validateForm()) {
       //PATCH
-      if (giftId) updateGift(gift);
+      if (giftId) updateGift(validatedGift);
 
       // POST
-      if (!giftId) postGift(gift);
+      if (!giftId) postGift(validatedGift);
     }
   }
 
@@ -195,6 +202,8 @@ const Gift = () => {
     if (!gift.url.trim()) {
       newErrors.url = "The URL is required.";
     }
+
+    
 
     setErrors(newErrors);
 
