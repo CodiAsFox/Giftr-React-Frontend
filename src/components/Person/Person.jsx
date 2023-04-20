@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import { useToken } from "../../context/TokenContext";
 import { Button } from "@chakra-ui/react";
 import { usePage } from "../../context/PageContext";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const Person = () => {
   const [token, setToken] = useToken();
 
   const [page, updatePage] = usePage(null);
   const params = useParams();
+  const navigate = useNavigate();
+
   const id = params.id;
 
   const shape = {
@@ -37,18 +39,22 @@ const Person = () => {
       console.log('gonna PATCH')
       updatePerson(person);
     }
-
+    
     if (!id) {
+      console.log('gonna POST')
       postPerson(person);
     }
   }
 
-  // fill the inputs with data from getPerson fetch
+  function doDelete() {
+    deletePerson(id); 
+    //navigate('/people'); //TODO: deletePerson is working but we navigate to /people before it has gone through and then the person is still on the list
+  }
 
   // API GET, POST, PATCH, DELETE
   const api = import.meta.env.VITE_API_URL;
   const url = `${api}/people`;
-
+  
   function getPerson() {
     // api/people/${id}
     let endpoint = `${url}/${id}`;
@@ -78,7 +84,7 @@ const Person = () => {
         setToken(null);
         navigate("/");
       });
-  } // end of getPerson
+  }
 
   function postPerson(data) {
     let request = new Request(url, {
@@ -117,17 +123,40 @@ const Person = () => {
     });
   }
 
+  function deletePerson(persId) {
+    // api/people/${id}
+    let endpoint = `${url}/${persId}`;
+    let request = new Request(endpoint, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    fetch(request)
+      .then((res) => {
+        if (res.status === 401) throw new Error("Unauthorized access to API.");
+        if (!res.ok) throw new Error("Invalid response");
+        console.log('res: ', res)
+        return res.json();
+      })
+      .then(()=>navigate('/people'))
+      .catch((err) => {
+        console.warn(err.message);
+        setToken(null);
+        navigate("/");
+      });
+  }
+
   useEffect(()=>{
     if (id) {
-      getPerson();
+      getPerson(); // fill the inputs with data from GET fetch
     }
   },[]);
 
-  // if useParams id OR person not null, then edit person
   return (
-    // ADD PERSON
     <section className="Person">
-      <h2>{id ? "You are in edit [Bob]" : "Adding a person"}</h2>
+      <h2>{id ? "You are in edit [Bob]" : "Adding a person"}</h2> {/*refine this*/}
       <form>
         <div className="formBox">
           <label htmlFor="name">Name</label>
@@ -170,9 +199,11 @@ const Person = () => {
             fontSize={"sm"}
             fontWeight={600}
             mr={3}
+            onClick={doDelete}
           >
             Delete
-          </Button>
+          </Button> {/* TODO: this should be a CANCEL button if we are ADDING */}
+
         </div>
       </form>
     </section>
