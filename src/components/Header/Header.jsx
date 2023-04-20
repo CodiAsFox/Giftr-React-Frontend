@@ -36,7 +36,7 @@ export default function WithSubnavigation() {
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
           ></Text>
-          <Image src="./logo.svg" w={185} />
+          <Image src="/logo.svg" w={185} />
         </Flex>
 
         <Stack

@@ -1,6 +1,23 @@
 import { useState, useEffect } from "react";
 import { useToken } from "../../context/TokenContext";
-import { Button } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Heading,
+  FormControl,
+  FormLabel,
+  Input,
+  FormHelperText,
+  Text,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+} from "@chakra-ui/react";
 import { usePage } from "../../context/PageContext";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -10,6 +27,10 @@ const Person = () => {
   const params = useParams();
   const navigate = useNavigate();
   const [page, updatePage] = usePage();
+  const [errors, setErrors] = useState({
+    name: "",
+    dob: "",
+  });
 
   const id = params.id;
 
@@ -18,7 +39,7 @@ const Person = () => {
     dob: "",
   };
 
-  const [person, setPerson] = useState({ ...shape }); // a copy of shape is sent to STATE
+  const [person, setPerson] = useState({ ...shape });
 
   useEffect(() => {
     updatePage({
@@ -32,11 +53,31 @@ const Person = () => {
     updatePage({ ...page, page: "people/add" });
   }, []);
 
-  // clicking on SAVE button
-  function savePerson() {
-    if (id) updatePerson(person);
+  function validateForm() {
+    const newErrors = {
+      name: "",
+      dob: "",
+    };
 
-    if (!id) postPerson(person);
+    if (!person.name.trim()) {
+      newErrors.name = "Name is required.";
+    }
+
+    if (!person.dob.trim()) {
+      newErrors.dob = "Birthday is required.";
+    }
+
+    setErrors(newErrors);
+
+    return Object.values(newErrors).every((error) => !error);
+  }
+
+  function savePerson() {
+    if (validateForm()) {
+      if (id) updatePerson(person);
+
+      if (!id) postPerson(person);
+    }
   }
 
   function doDelete() {
@@ -151,6 +192,34 @@ const Person = () => {
       });
   }
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  function DeleteConfirm() {
+    return (
+      <>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Do you want to delete {person.name}?</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              This action will permanently delete the person and all associated
+              saved gifts from your list. This action is irreversible.
+            </ModalBody>
+
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button colorScheme="red" onClick={doDelete}>
+                Confirm
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </>
+    );
+  }
+
   useEffect(() => {
     if (id) {
       getPerson(); // fill the inputs with data from GET fetch
@@ -158,34 +227,39 @@ const Person = () => {
   }, []);
 
   return (
-    <section className="Person">
-      <h2>{id ? "You are in edit [Bob]" : "Adding a person"}</h2>{" "}
-      {/*refine this*/}
-      <form>
-        <div className="formBox">
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            name="name"
-            maxLength="80"
-            placeholder="Person's name"
-            value={`${person.name}`}
-            onChange={(ev) => setPerson({ ...person, name: ev.target.value })}
-            required
-          />
-        </div>
-        <div className="formBox">
-          <label htmlFor="dob">Date of Birth </label>
-          <input
-            type="date"
-            id="dob"
-            name="dob"
-            pattern="\d{4}-\d{2}-\d{2}"
-            value={`${person.dob}`}
-            onChange={(ev) => setPerson({ ...person, dob: ev.target.value })}
-            required
-          />
-        </div>
+    <Box className="Person">
+      <Heading>{id ? `Edit ${person.name}` : "Add person"}</Heading>
+      <FormControl isRequired>
+        <FormLabel>Person's name</FormLabel>
+        <Input
+          type="text"
+          name="name"
+          maxLength="80"
+          placeholder="Person's name"
+          value={`${person.name}`}
+          onChange={(ev) => {
+            setPerson({ ...person, name: ev.target.value });
+            handleInputChange(ev);
+          }}
+          required
+        />
+        {errors.name && <Text color="red.300">{errors.name}</Text>}
+
+        <FormHelperText>E.g. Bob Robertson</FormHelperText>
+        <FormLabel>Birthdate</FormLabel>
+        <Input
+          placeholder="Select Date and Time"
+          size="md"
+          type="date"
+          id="dob"
+          name="dob"
+          pattern="\d{4}-\d{2}-\d{2}"
+          value={`${person.dob}`}
+          onChange={(ev) => setPerson({ ...person, dob: ev.target.value })}
+          required
+        />
+        {errors.dob && <Text color="red.300">{errors.dob}</Text>}
+
         <div className="formBox">
           <Button
             colorScheme="teal"
@@ -197,20 +271,33 @@ const Person = () => {
           >
             Save
           </Button>
-          <Button
-            colorScheme="teal"
-            as={"a"}
-            fontSize={"sm"}
-            fontWeight={600}
-            mr={3}
-            onClick={doDelete}
-          >
-            Delete
-          </Button>{" "}
-          {/* TODO: this should be a CANCEL button if we are ADDING */}
+          {id ? (
+            <Button
+              colorScheme="teal"
+              as={"a"}
+              fontSize={"sm"}
+              fontWeight={600}
+              mr={3}
+              onClick={onOpen}
+            >
+              <DeleteConfirm />
+              Delete
+            </Button>
+          ) : (
+            <Button
+              colorScheme="teal"
+              as={"a"}
+              fontSize={"sm"}
+              fontWeight={600}
+              mr={3}
+              href="/people"
+            >
+              Cancel
+            </Button>
+          )}
         </div>
-      </form>
-    </section>
+      </FormControl>
+    </Box>
   );
   // else edit person
 };

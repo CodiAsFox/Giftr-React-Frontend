@@ -22,7 +22,7 @@ export default function SmallWithLogoLeft() {
         justify={{ base: "center", md: "space-between" }}
         align={{ base: "center", md: "center" }}
       >
-        <Image src="./logo.svg" w={120} />
+        <Image src="/logo.svg" w={120} />
         <Text>© 2023 Giftr. All rights reserved</Text>
       </Container>
     </Box>
