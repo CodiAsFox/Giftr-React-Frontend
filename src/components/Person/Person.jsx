@@ -35,20 +35,13 @@ const Person = () => {
 
   // clicking on SAVE button
   function savePerson() {
-    if (id) {
-      console.log('gonna PATCH')
-      updatePerson(person);
-    }
-    
-    if (!id) {
-      console.log('gonna POST')
-      postPerson(person);
-    }
+    if (id) updatePerson(person);
+
+    if (!id) postPerson(person);
   }
 
   function doDelete() {
     deletePerson(id); 
-    //navigate('/people'); //TODO: deletePerson is working but we navigate to /people before it has gone through and then the person is still on the list
   }
 
   // API GET, POST, PATCH, DELETE
@@ -96,12 +89,19 @@ const Person = () => {
       body: JSON.stringify(data),
     });
 
-    fetch(request).then((res) => {
-      if (res.status === 401) throw new Error("Unauthorized access to API.");
-      if (!res.ok) throw new Error("Invalid response");
-      console.log("response: ", res);
-      return res.json();
-    });
+    fetch(request)
+      .then((res) => {
+        if (res.status === 401) throw new Error("Unauthorized access to API.");
+        if (!res.ok) throw new Error("Invalid response");
+        console.log("response: ", res);
+        return res.json();
+      })
+      .then(()=>navigate('/people'))
+      .catch((err) => {
+        console.warn(err.message);
+        setToken(null);
+        navigate("/");
+      });
   }
 
   function updatePerson(data) {
@@ -115,12 +115,19 @@ const Person = () => {
       body: JSON.stringify(data),
     });
 
-    fetch(request).then((res) => {
-      if (res.status === 401) throw new Error("Unauthorized access to API.");
-      if (!res.ok) throw new Error("Invalid response");
-      console.log("response: ", res);
-      return res.json();
-    });
+    fetch(request)
+      .then((res) => {
+        if (res.status === 401) throw new Error("Unauthorized access to API.");
+        if (!res.ok) throw new Error("Invalid response");
+        console.log("response: ", res);
+        return res.json();
+      })
+      .then(()=>navigate('/people'))
+      .catch((err) => {
+        console.warn(err.message);
+        setToken(null);
+        navigate("/");
+      });
   }
 
   function deletePerson(persId) {
