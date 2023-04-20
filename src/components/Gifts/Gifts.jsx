@@ -11,6 +11,7 @@ import {
   Stack,
   StackDivider,
   Text,
+  Skeleton,
   Box,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,6 +23,7 @@ const Gifts = () => {
   const [token, setToken] = useToken();
 
   const { id } = useParams();
+  const [loading, setLoading] = useState(true);
 
   const [page, updatePage] = usePage();
   const shape = {
@@ -132,52 +134,65 @@ const Gifts = () => {
         navigate("/");
       });
   }
-  console.log(person);
+
   useEffect(() => {
     getPerson();
   }, []);
   useEffect(() => {
     getGifts();
-    console.log(person);
+    setLoading(false);
   }, [person]);
 
   return (
     <Box className="gifts" w="100%">
       <Card borderRadius={10}>
         <CardHeader bg="pink.900" borderTopRadius={10}>
-          <Heading
-            size="lg"
-            bgGradient="linear(to-r, green.200, pink.500)"
-            bgClip="text"
-            fontSize="4xl"
-            fontWeight="extrabold"
-          >
-            <FontAwesomeIcon icon={faGifts} color="#9be59d" width="3rem" />
-            <Box display="inline" pl={1}>
+          <Skeleton isLoaded={!loading}>
+            <Text
+              size="lg"
+              bgGradient="linear(to-r, green.200, pink.500)"
+              bgClip="text"
+              fontSize="4xl"
+              fontWeight="extrabold"
+              display="inline-block"
+            >
+              <FontAwesomeIcon icon={faGifts} color="#25DAD6" width="3rem" />
+            </Text>
+            <Text
+              size="lg"
+              bgGradient="linear(to-r, teal.500, pink.300, pink.500)"
+              bgClip="text"
+              fontSize="4xl"
+              fontWeight="extrabold"
+              display="inline-block"
+              pl="3"
+            >
               {person.name} Gift List
-            </Box>
-          </Heading>
+            </Text>
+          </Skeleton>
         </CardHeader>
         <CardBody>
-          <Stack divider={<StackDivider />} spacing="4">
-            {!gifts[0] ? (
-              <Text>
-                <Heading size="lg">
-                  There's not Gifts for <strong>{person.name}</strong>!
-                </Heading>
-                <br />
-                Tap the button above to add one.
-              </Text>
-            ) : (
-              gifts.map((gift) => (
-                <BoxListItem
-                  key={gift.gift_id}
-                  gift={gift}
-                  deleteItem={deleteGift}
-                />
-              ))
-            )}
-          </Stack>
+          <Skeleton isLoaded={!loading}>
+            <Stack divider={<StackDivider />} spacing="4">
+              {!gifts[0] ? (
+                <Text>
+                  <Heading size="lg">
+                    There's not Gifts for <strong>{person.name}</strong>!
+                  </Heading>
+                  <br />
+                  Tap the button above to add one.
+                </Text>
+              ) : (
+                gifts.map((gift) => (
+                  <BoxListItem
+                    key={gift.gift_id}
+                    gift={gift}
+                    deleteItem={deleteGift}
+                  />
+                ))
+              )}
+            </Stack>
+          </Skeleton>
         </CardBody>
       </Card>
     </Box>

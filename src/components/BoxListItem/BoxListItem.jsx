@@ -19,6 +19,9 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
+  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -37,7 +40,7 @@ const ListItem = (props) => {
   const person = props.person;
   const gift = props.gift;
   const deleteItem = props.deleteItem;
-  const [itemDeleted, setItemDeleted] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   if (person) {
     // /people (list)
@@ -58,6 +61,7 @@ const ListItem = (props) => {
       setDate(
         jsDate.toLocaleDateString("en", { month: "long", day: "numeric" })
       );
+      setLoading(false);
     }, [dob]);
 
     // console.log(person.gifts.length);
@@ -68,37 +72,51 @@ const ListItem = (props) => {
       <Flex>
         <Box flex="5">
           <Stack direction={["column", "row"]} spacing="24px">
+<<<<<<< Updated upstream
             {/* <WrapItem>
               <Avatar name={name} src={getAvatar} />
             </WrapItem> */}
+=======
+            <WrapItem>
+              <SkeletonCircle size="48px" isLoaded={!loading}>
+                <Avatar name={name} src={getAvatar} />
+              </SkeletonCircle>
+            </WrapItem>
+>>>>>>> Stashed changes
             <Box flex="1">
-              <Heading size="xs" textTransform="uppercase">
-                {name}
-                <Badge ml="1" colorScheme="blue">
-                  {GiftCount} {GiftCount >= 1 ? "Gift" : "Gifts"}
-                </Badge>
-              </Heading>
-              <Text pt="2" fontSize="sm">
-                {date}
-              </Text>
+              <Skeleton isLoaded={!loading}>
+                <Heading size="xs" textTransform="uppercase">
+                  {name}
+                  <Badge ml="1" colorScheme="blue">
+                    {GiftCount} {GiftCount >= 1 ? "Gift" : "Gifts"}
+                  </Badge>
+                </Heading>
+              </Skeleton>
+              <Skeleton isLoaded={!loading}>
+                <Text pt="2" fontSize="sm">
+                  {date}
+                </Text>
+              </Skeleton>
             </Box>
           </Stack>
         </Box>
         <Box>
-          <Stack direction="row" spacing={4} align="center" flex="1">
-            <Button
-              colorScheme="blue"
-              onClick={() => doEdit(id)}
-              data-person={id}
-            >
-              <FontAwesomeIcon icon={faPenToSquare} />
-              <Text pl={1}>Edit</Text>
-            </Button>
-            <Button colorScheme="purple" onClick={() => doGifts(id)}>
-              <FontAwesomeIcon icon={faGifts} />
-              <Text pl={1}>View Gifts</Text>
-            </Button>
-          </Stack>
+          <Skeleton isLoaded={!loading}>
+            <Stack direction="row" spacing={4} align="center" flex="1">
+              <Button
+                colorScheme="blue"
+                onClick={() => doEdit(id)}
+                data-person={id}
+              >
+                <FontAwesomeIcon icon={faPenToSquare} />
+                <Text pl={1}>Edit</Text>
+              </Button>
+              <Button colorScheme="purple" onClick={() => doGifts(id)}>
+                <FontAwesomeIcon icon={faGifts} />
+                <Text pl={1}>View Gifts</Text>
+              </Button>
+            </Stack>
+          </Skeleton>
         </Box>
       </Flex>
     );
@@ -111,6 +129,10 @@ const ListItem = (props) => {
     function doEdit(id, gift_id) {
       navigate(`/people/${id}/gifts/${gift_id}`);
     }
+
+    useEffect(() => {
+      setLoading(false);
+    }, [gift_id]);
 
     function doDelete(gift_id) {
       deleteItem(gift_id);
@@ -149,53 +171,61 @@ const ListItem = (props) => {
       <Flex>
         <Box flex="5">
           <Box flex="1">
-            <Text size="md" textTransform="uppercase">
-              {gift_name}
-            </Text>
-            <Stack direction="row" spacing={4} align="top" flex="1" pt={3}>
-              <Box>
-                <HStack bg="green.700" p="5px 15px" borderRadius={20}>
-                  <Flex alignItems="center" fontSize="sm">
-                    <FontAwesomeIcon icon={faShop} />
-                    <Text pl={2} fontWeight="bold" fontSize="sm">
-                      {store}
-                    </Text>
-                  </Flex>
-                </HStack>
+            <Skeleton isLoaded={!loading}>
+              <Box flex="1">
+                <Text size="md" textTransform="uppercase">
+                  {gift_name}
+                </Text>
               </Box>
-              <Box>
-                <Link href="{url}" isExternal>
-                  <HStack bg="orange.600" p="5px 15px" borderRadius={20}>
-                    {url}
+            </Skeleton>
+            <Skeleton isLoaded={!loading}>
+              <Stack direction="row" spacing={4} align="top" flex="1" pt={3}>
+                <Box>
+                  <HStack bg="green.700" p="5px 15px" borderRadius={20}>
                     <Flex alignItems="center" fontSize="sm">
-                      <FontAwesomeIcon icon={faGlobe} />
+                      <FontAwesomeIcon icon={faShop} />
                       <Text pl={2} fontWeight="bold" fontSize="sm">
-                        View website <ExternalLinkIcon mx="2px" />
+                        {store}
                       </Text>
                     </Flex>
                   </HStack>
-                </Link>
-              </Box>
-            </Stack>
+                </Box>
+                <Box>
+                  <Link href="{url}" isExternal>
+                    <HStack bg="orange.600" p="5px 15px" borderRadius={20}>
+                      {url}
+                      <Flex alignItems="center" fontSize="sm">
+                        <FontAwesomeIcon icon={faGlobe} />
+                        <Text pl={2} fontWeight="bold" fontSize="sm">
+                          View website <ExternalLinkIcon mx="2px" />
+                        </Text>
+                      </Flex>
+                    </HStack>
+                  </Link>
+                </Box>
+              </Stack>
+            </Skeleton>
           </Box>
         </Box>
         <Box>
-          <Stack direction="row" spacing={4} align="center" flex="1">
-            <Button
-              colorScheme="blue"
-              onClick={() => doEdit(id, gift_id)}
-              data-person={id}
-            >
-              <FontAwesomeIcon icon={faPenToSquare} />
-              <Text pl={1}>Edit</Text>
-            </Button>
+          <Skeleton isLoaded={!loading}>
+            <Stack direction="row" spacing={4} align="center" flex="1">
+              <Button
+                colorScheme="blue"
+                onClick={() => doEdit(id, gift_id)}
+                data-person={id}
+              >
+                <FontAwesomeIcon icon={faPenToSquare} />
+                <Text pl={1}>Edit</Text>
+              </Button>
 
-            <Button colorScheme="red" onClick={onOpen}>
-              <DeleteConfirm giftId={gift_id} />
-              <FontAwesomeIcon icon={faTrash} />
-              <Text pl={1}>Delete</Text>
-            </Button>
-          </Stack>
+              <Button colorScheme="red" onClick={onOpen}>
+                <DeleteConfirm giftId={gift_id} />
+                <FontAwesomeIcon icon={faTrash} />
+                <Text pl={1}>Delete</Text>
+              </Button>
+            </Stack>
+          </Skeleton>
         </Box>
       </Flex>
     );
