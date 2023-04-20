@@ -60,9 +60,8 @@ const ListItem = (props) => {
       );
     }, [dob]);
 
-    // console.log(person.gifts.length);
-
-    const GiftCount = person.gifts.length;
+    // REQUIRES refactoring - API not structured for this + badge
+    // const GiftCount = person.gifts.length;
 
     return (
       <Flex>
@@ -74,9 +73,9 @@ const ListItem = (props) => {
             <Box flex="1">
               <Heading size="xs" textTransform="uppercase">
                 {name}
-                <Badge ml="1" colorScheme="blue">
+                {/* <Badge ml="1" colorScheme="blue">
                   {GiftCount} {GiftCount >= 1 ? "Gift" : "Gifts"}
-                </Badge>
+                </Badge> */}
               </Heading>
               <Text pt="2" fontSize="sm">
                 {date}
