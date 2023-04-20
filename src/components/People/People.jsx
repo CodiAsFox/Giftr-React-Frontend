@@ -5,7 +5,7 @@ import {
   CardBody,
   Text,
   Box,
-  Heading,
+  Skeleton,
   Stack,
   StackDivider,
 } from "@chakra-ui/react";
@@ -21,6 +21,7 @@ const People = () => {
 
   const [token, setToken] = useToken();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   const [page, updatePage] = usePage();
 
@@ -73,34 +74,46 @@ const People = () => {
 
   useEffect(() => {
     getPeople();
+    setLoading(false);
   }, []);
   return (
     <Box className="people" w="100%">
       <Card borderRadius={10}>
         <CardHeader bg="pink.900" borderTopRadius={10}>
-          <Heading
+          <Text
             size="lg"
             bgGradient="linear(to-r, green.200, pink.500)"
             bgClip="text"
             fontSize="4xl"
             fontWeight="extrabold"
+            display="inline-block"
           >
             <FontAwesomeIcon
               icon={faPeopleGroup}
-              color="#9be59d"
+              color="#25DAD6"
               width="3rem"
             />
-            <Text display="inline" pl={1}>
-              People List
-            </Text>
-          </Heading>
+          </Text>
+          <Text
+            size="lg"
+            bgGradient="linear(to-r, teal.500, pink.300, pink.500)"
+            bgClip="text"
+            fontSize="4xl"
+            fontWeight="extrabold"
+            display="inline-block"
+            pl="3"
+          >
+            People List
+          </Text>
         </CardHeader>
         <CardBody>
-          <Stack divider={<StackDivider />} spacing="4">
-            {people.map((person) => (
-              <BoxListItem key={person.id} person={person} />
-            ))}
-          </Stack>
+          <Skeleton isLoaded={!loading}>
+            <Stack divider={<StackDivider />} spacing="4">
+              {people.map((person) => (
+                <BoxListItem key={person.id} person={person} />
+              ))}
+            </Stack>
+          </Skeleton>
         </CardBody>
       </Card>
     </Box>
