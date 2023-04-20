@@ -60,6 +60,8 @@ const People = () => {
         });
       })
       .then((ppl) => {
+        ppl.sort((a,b)=> b.dob > a.dob ? 1 : -1);
+        // console.log(`${sortedPpl}`)
         console.log("ppl", ppl);
         setPeople(ppl);
       })
