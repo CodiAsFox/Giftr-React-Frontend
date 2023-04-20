@@ -10,10 +10,12 @@ import {
   Text,
 } from "@chakra-ui/react";
 import HomeBoxes from "../HomeBox/HomeBox";
+import CheckToken from "../../auth/CheckToken";
 
 const Home = () => {
   return (
     <Box className="Home">
+      <CheckToken />
       <Card align="center">
         <CardHeader>
           <Heading size="md"> Welcome to Giftr!</Heading>

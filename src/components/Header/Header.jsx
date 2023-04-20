@@ -9,7 +9,7 @@ import {
   Container,
 } from "@chakra-ui/react";
 import { SkipNavLink } from "@chakra-ui/skip-nav";
-import CheckToken from "../../auth/CheckToken";
+
 import Nav from "../Nav/Nav";
 import Back from "../Back/Back";
 
@@ -48,7 +48,6 @@ export default function WithSubnavigation() {
           direction={"row"}
           spacing={6}
         >
-          <CheckToken />
           <Nav />
         </Stack>
       </Container>
