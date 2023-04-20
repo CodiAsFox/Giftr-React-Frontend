@@ -30,7 +30,7 @@ import {
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-// import { AvatarGenerator } from "random-avatar-generator";
+import { AvatarGenerator } from "random-avatar-generator";
 
 const ListItem = (props) => {
   const navigate = useNavigate();
@@ -44,8 +44,8 @@ const ListItem = (props) => {
     const { id, name, dob } = person;
     const jsDate = new Date(dob);
     const [date, setDate] = useState(null);
-    // const generator = new AvatarGenerator();
-    // const getAvatar = generator.generateRandomAvatar();
+    const generator = new AvatarGenerator();
+    const getAvatar = generator.generateRandomAvatar();
 
     function doEdit(id) {
       navigate(`/people/${id}`);
@@ -68,9 +68,9 @@ const ListItem = (props) => {
       <Flex>
         <Box flex="5">
           <Stack direction={["column", "row"]} spacing="24px">
-            {/* <WrapItem>
+            <WrapItem>
               <Avatar name={name} src={getAvatar} />
-            </WrapItem> */}
+            </WrapItem>
             <Box flex="1">
               <Heading size="xs" textTransform="uppercase">
                 {name}
