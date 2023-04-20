@@ -29,7 +29,7 @@ const ListItem = (props) => {
     }
 
     useEffect(() => {
-      setDate(jsDate.toLocaleDateString("en", { dateStyle: "medium" }));
+      setDate(jsDate.toLocaleDateString("en", { month: 'long', day: 'numeric'}));
     }, [dob]);
 
     return (
