@@ -54,6 +54,7 @@ const People = () => {
             id: ppl._id,
             name: ppl.name,
             dob: ppl.dob,
+            giftCount: ppl.giftCount,
           };
           return person;
         });
