@@ -155,9 +155,11 @@ const Gifts = () => {
   }, []);
   useEffect(() => {
     getGifts();
-    setLoading(false);
   }, [person]);
 
+  useEffect(() => {
+    setLoading(false);
+  }, [person]);
   return (
     <Box className="gifts" w="100%">
       <CheckToken />

@@ -112,8 +112,11 @@ const People = () => {
 
   useEffect(() => {
     getPeople();
-    setLoading(false);
   }, []);
+
+  useEffect(() => {
+    setLoading(false);
+  }, [people]);
   return (
     <Box className="people" w="100%">
       <CheckToken />
