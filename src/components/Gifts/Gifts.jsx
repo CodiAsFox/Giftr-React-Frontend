@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-
 import {
   Box,
   Card,
@@ -11,7 +10,6 @@ import {
   Stack,
   StackDivider,
   Text,
-
 } from "@chakra-ui/react";
 import { faGifts } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -119,36 +117,6 @@ const Gifts = () => {
       });
   }
 
-  const urlPerson = `${api}/people`;
-  console.log(urlPerson, token);
-  function getPerson() {
-    let endpoint = `${urlPerson}/${id}`;
-    let request = new Request(endpoint, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    fetch(request)
-      .then((res) => {
-        if (res.status === 401) throw new Error("Unauthorized access to API.");
-        if (!res.ok) throw new Error("Invalid response");
-        return res.json();
-      })
-      .then(({ data }) => {
-        return data;
-      })
-      .then(({ name, dob }) => {
-        dob = dob.split("T")[0];
-        setPerson({ name, dob });
-      })
-      .catch((err) => {
-        console.warn(err.message);
-        setToken(null);
-      });
-  }
-
   function removeGiftFromList(giftId) {
     let updatedGifts = gifts.filter((gift) => gift.gift_id !== giftId);
     setGifts(updatedGifts);
@@ -192,7 +160,6 @@ const Gifts = () => {
 
   return (
     <Box className="gifts" w="100%">
-
       <CheckToken />
 
       <Card borderRadius={10}>
@@ -218,25 +185,20 @@ const Gifts = () => {
               display="inline-block"
               pl="3"
             >
-
               {person.name} gift List
             </Heading>
-
           </Skeleton>
         </CardHeader>
         <CardBody>
           <Skeleton isLoaded={!loading}>
             <Stack divider={<StackDivider />} spacing="4">
               {!gifts[0] ? (
-
                 <Box>
-
                   <Heading size="lg">
                     There's not Gifts for <strong>{person.name}</strong>!
                   </Heading>
                   <br />
                   Tap the button above to add one.
-
                 </Box>
               ) : (
                 gifts.map((gift) => (

@@ -1,4 +1,3 @@
-
 import {
   Box,
   Card,
@@ -24,7 +23,6 @@ import DeleteConfirm from "./Form/DeleteConfirm";
 import PersonActions from "./Form/Actions";
 import DateField from "./Form/DateField";
 import NameField from "./Form/NameField";
-
 
 const Person = () => {
   const [token, setToken] = useToken();
@@ -107,34 +105,6 @@ const Person = () => {
 
   const personName = person.name;
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  function DeleteConfirm() {
-    return (
-      <>
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Do you want to delete {person.name}?</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              This action will permanently delete the person and all associated
-              saved gifts from your list. This action is irreversible.
-            </ModalBody>
-
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme="red" onClick={doDelete}>
-                Confirm
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </>
-    );
-  }
-
   useEffect(() => {
     if (id) {
       getPerson(); // fill the inputs with data from GET fetch
@@ -144,7 +114,6 @@ const Person = () => {
 
   return (
     <Box className="Person">
-
       <CheckToken />
 
       <Card borderRadius={10}>
@@ -166,7 +135,6 @@ const Person = () => {
             </Text>
 
             <Heading
-
               size="lg"
               bgGradient="linear(to-r, teal.500, pink.300, pink.500)"
               bgClip="text"
@@ -175,16 +143,13 @@ const Person = () => {
               display="inline-block"
               pl="3"
             >
-
               {id ? `Edit ${personName}` : "Add person"}
             </Heading>
-
           </Skeleton>
         </CardHeader>
         <CardBody>
           <Stack divider={<StackDivider />} spacing="4">
             <FormControl isRequired>
-
               <NameField
                 person={person}
                 setPerson={setPerson}
@@ -199,7 +164,6 @@ const Person = () => {
               />
               <PersonActions id={id} savePerson={savePerson} onOpen={onOpen} />
               <Box className="formBox" pt={4}></Box>
-
             </FormControl>
           </Stack>
         </CardBody>
@@ -213,7 +177,6 @@ const Person = () => {
       />
     </Box>
   );
-  
 };
 
 export default Person;
