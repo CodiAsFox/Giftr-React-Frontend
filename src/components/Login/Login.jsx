@@ -8,7 +8,7 @@ import { useToken } from "../../context/TokenContext";
 const Login = (props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [token, updateToken] = useToken();
-  const [isLoading, setIsLoading] = useState(false); // added state variable
+  const [isLoading, setIsLoading] = useState(false);
   const label = props.label;
   const colour = props.colour;
   const icon = props.icon;

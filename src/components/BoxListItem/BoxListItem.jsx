@@ -41,11 +41,9 @@ const BoxListItem = (props) => {
   const [loading, setLoading] = useState(true);
 
   if (person) {
-    // /people (list)
-    const { id, name, dob } = person;
+    const { id, name, dob, giftCount } = person;
     const jsDate = new Date(dob);
     const [date, setDate] = useState(null);
-
     const config = genConfig(id);
 
     function doEdit(id) {
@@ -75,6 +73,9 @@ const BoxListItem = (props) => {
               <Skeleton isLoaded={!loading}>
                 <Heading size="xs" textTransform="uppercase">
                   {name}
+                  <Badge ml="1" colorScheme="blue">
+                    {giftCount} {giftCount >= 1 ? "Gift" : "Gifts"}
+                  </Badge>
                 </Heading>
               </Skeleton>
               <Skeleton isLoaded={!loading}>
@@ -125,7 +126,6 @@ const BoxListItem = (props) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     function DeleteConfirm({ giftId }) {
-      console.log(giftId);
       return (
         <>
           <Modal isOpen={isOpen} onClose={onClose}>
