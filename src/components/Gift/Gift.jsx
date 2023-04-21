@@ -52,7 +52,6 @@ const Gift = () => {
 
   function saveGift() {
     const validatedGift = {...gift};
-
     cleanUpData(validatedGift);
 
     if (validateForm()) {

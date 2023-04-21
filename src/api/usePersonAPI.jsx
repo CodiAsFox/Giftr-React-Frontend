@@ -3,7 +3,6 @@ import { useToast } from "@chakra-ui/react";
 
 function usePersonAPI(token, setToken, id, url, navigate, setPerson) {
   function getPerson() {
-    // api/people/${id}
     let endpoint = `${url}/${id}`;
     let request = new Request(endpoint, {
       method: "GET",

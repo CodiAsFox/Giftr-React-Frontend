@@ -101,7 +101,6 @@ const People = () => {
             return dateA.getDate() - dateB.getDate();
           }
         });
-        console.log("ppl", ppl);
         setPeople(ppl);
       })
       .catch((err) => {
@@ -148,11 +147,13 @@ const People = () => {
         </CardHeader>
         <CardBody>
           <Skeleton isLoaded={!loading}>
-            <Stack divider={<StackDivider />} spacing="4">
-              {people.map((person) => (
-                <BoxListItem key={person.id} person={person} />
-              ))}
-            </Stack>
+            <Box minHeight="5rem">
+              <Stack divider={<StackDivider />} spacing="4">
+                {people.map((person) => (
+                  <BoxListItem key={person.id} person={person} />
+                ))}
+              </Stack>
+            </Box>
           </Skeleton>
         </CardBody>
       </Card>

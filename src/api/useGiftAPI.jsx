@@ -119,7 +119,6 @@ function useGiftAPI(token, setToken, personId, giftId, url, navigate, setGift) {
   }
 
   function deleteGift(giftId) {
-    // api/people/${id}
     let endpoint = `${url}/${giftId}`;
     let request = new Request(endpoint, {
       method: "DELETE",
