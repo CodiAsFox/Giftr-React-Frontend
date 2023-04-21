@@ -101,7 +101,6 @@ const People = () => {
             return dateA.getDate() - dateB.getDate();
           }
         });
-        console.log("ppl", ppl);
         setPeople(ppl);
       })
       .catch((err) => {
