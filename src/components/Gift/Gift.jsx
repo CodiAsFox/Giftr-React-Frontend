@@ -1,5 +1,3 @@
-
-
 import {
   Box,
   Card,
@@ -27,12 +25,10 @@ import StoreField from "./Form/StoreField";
 import TextField from "./Form/TextField";
 import UrlField from "./Form/UrlField";
 
-
 const Gift = () => {
   const [token, setToken] = useToken();
 
   const navigate = useNavigate();
-
 
   const [loading, setLoading] = useState(true);
   const params = useParams();
@@ -55,10 +51,9 @@ const Gift = () => {
   }, []);
 
   function saveGift() {
-
-    const validatedGift = {...gift};
-    if(!gift.url.startsWith('https://')) {
-      let urlPrefix = 'https://';
+    const validatedGift = { ...gift };
+    if (!gift.url.startsWith("https://")) {
+      let urlPrefix = "https://";
       validatedGift.url = urlPrefix + validatedGift.url;
       setGift(validatedGift);
     }
@@ -111,60 +106,6 @@ const Gift = () => {
     return Object.values(newErrors).every((error) => !error);
   }
 
-  function validateForm() {
-    const newErrors = {
-      txt: "",
-      store: "",
-      url: "",
-    };
-
-    console.log(gift);
-
-    if (!gift.txt.trim()) {
-      newErrors.name = "Name is required.";
-    }
-    if (!gift.store.trim()) {
-      newErrors.store = "Store name is required.";
-    }
-    if (!gift.url.trim()) {
-      newErrors.url = "The URL is required.";
-    }
-
-    
-
-    setErrors(newErrors);
-
-    return Object.values(newErrors).every((error) => !error);
-  }
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  function DeleteConfirm() {
-    return (
-      <>
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Do you want to delete {gift.txt}?</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              This action will permanently delete the gift and all it's data.
-              This action is irreversible.
-            </ModalBody>
-
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme="red" onClick={doDelete}>
-                Confirm
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </>
-    );
-  }
-
   useEffect(() => {
     if (giftId) {
       getGift();
@@ -180,7 +121,6 @@ const Gift = () => {
   const giftName = gift.txt;
   return (
     <Box className="Gift">
-
       <CheckToken />
 
       <Card borderRadius={10}>
@@ -197,12 +137,11 @@ const Gift = () => {
               <FontAwesomeIcon
                 icon={faPersonCirclePlus}
                 color="#25DAD6"
-                width="3rem"
+                width="48px"
               />
             </Text>
 
             <Heading
-
               size="lg"
               bgGradient="linear(to-r, teal.500, pink.300, pink.500)"
               bgClip="text"
@@ -211,16 +150,13 @@ const Gift = () => {
               display="inline-block"
               pl="3"
             >
-
               {giftId ? `Edit ${giftName}` : "Add gift"}
             </Heading>
-
           </Skeleton>
         </CardHeader>
         <CardBody>
           <Stack divider={<StackDivider />} spacing="4">
             <FormControl isRequired>
-
               <TextField
                 gift={gift}
                 setGift={setGift}
@@ -246,7 +182,6 @@ const Gift = () => {
                 onOpen={onOpen}
                 personId={personId}
               />
-
             </FormControl>
           </Stack>
         </CardBody>
@@ -258,7 +193,6 @@ const Gift = () => {
         doDelete={doDelete}
         gift={gift}
       />
-
     </Box>
   );
 };
