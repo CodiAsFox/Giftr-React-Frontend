@@ -77,11 +77,20 @@ const Person = () => {
   }
 
   function savePerson() {
-    if (validateForm()) {
-      if (id) updatePerson(person);
+    const validatedPerson = {...person};
 
-      if (!id) postPerson(person);
+    cleanUpData(validatedPerson);
+
+    if (validateForm()) {
+      if (id) updatePerson(validatedPerson);
+
+      if (!id) postPerson(validatedPerson);
     }
+  }
+
+  function cleanUpData(persObj) {
+    persObj.name = persObj.name.trim();
+    setPerson(persObj);
   }
 
   function doDelete() {
