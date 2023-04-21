@@ -1,21 +1,25 @@
 import { useEffect, useState } from "react";
 
-import { useToken } from "../../context/TokenContext";
-import { usePage } from "../../context/PageContext";
-import { useParams, useNavigate } from "react-router-dom";
+
 import {
+  Box,
   Card,
-  CardHeader,
   CardBody,
+  CardHeader,
   Heading,
+  Skeleton,
   Stack,
   StackDivider,
   Text,
-  Skeleton,
-  Box,
+
 } from "@chakra-ui/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGifts } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useParams } from "react-router-dom";
+import CheckToken from "../../auth/CheckToken";
+import { usePage } from "../../context/PageContext";
+import { useToken } from "../../context/TokenContext";
+
 import BoxListItem from "../BoxListItem/BoxListItem";
 
 const Gifts = () => {
@@ -51,7 +55,12 @@ const Gifts = () => {
 
     fetch(request)
       .then((res) => {
-        if (res.status === 401) throw new Error("Unauthorized access to API.");
+        if (res.status === 401) {
+          Unauthorized();
+          setToken(null);
+          navigate("/");
+          throw new Error("Unauthorized access to API.");
+        }
         if (!res.ok) throw new Error("Invalid response");
         return res.json();
       })
@@ -71,8 +80,42 @@ const Gifts = () => {
       })
       .catch((err) => {
         console.warn(err.message);
-        setToken(null);
-        navigate("/");
+        Toast("Something went wrong", err.message);
+      });
+  }
+
+  const urlPerson = `${api}/people`;
+
+  function getPerson() {
+    let endpoint = `${urlPerson}/${id}`;
+    let request = new Request(endpoint, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    fetch(request)
+      .then((res) => {
+        if (res.status === 401) {
+          Unauthorized();
+          setToken(null);
+          navigate("/");
+          throw new Error("Unauthorized access to API.");
+        }
+        if (!res.ok) throw new Error("Invalid response");
+        return res.json();
+      })
+      .then(({ data }) => {
+        return data;
+      })
+      .then(({ name, dob }) => {
+        dob = dob.split("T")[0];
+        setPerson({ name, dob });
+      })
+      .catch((err) => {
+        console.warn(err.message);
+        Toast("Something went wrong", err.message);
       });
   }
 
@@ -122,7 +165,12 @@ const Gifts = () => {
 
     fetch(request)
       .then((res) => {
-        if (res.status === 401) throw new Error("Unauthorized access to API.");
+        if (res.status === 401) {
+          Unauthorized();
+          setToken(null);
+          navigate("/");
+          throw new Error("Unauthorized access to API.");
+        }
         if (!res.ok) throw new Error("Invalid response");
 
         return res.json();
@@ -130,8 +178,7 @@ const Gifts = () => {
       .then(() => removeGiftFromList(id))
       .catch((err) => {
         console.warn(err.message);
-        setToken(null);
-        navigate("/");
+        Toast("Something went wrong", err.message);
       });
   }
 
@@ -145,6 +192,9 @@ const Gifts = () => {
 
   return (
     <Box className="gifts" w="100%">
+
+      <CheckToken />
+
       <Card borderRadius={10}>
         <CardHeader bg="pink.900" borderTopRadius={10}>
           <Skeleton isLoaded={!loading}>
@@ -158,7 +208,8 @@ const Gifts = () => {
             >
               <FontAwesomeIcon icon={faGifts} color="#25DAD6" width="3rem" />
             </Text>
-            <Text
+
+            <Heading
               size="lg"
               bgGradient="linear(to-r, teal.500, pink.300, pink.500)"
               bgClip="text"
@@ -167,21 +218,26 @@ const Gifts = () => {
               display="inline-block"
               pl="3"
             >
-              {person.name} Gift List
-            </Text>
+
+              {person.name} gift List
+            </Heading>
+
           </Skeleton>
         </CardHeader>
         <CardBody>
           <Skeleton isLoaded={!loading}>
             <Stack divider={<StackDivider />} spacing="4">
               {!gifts[0] ? (
-                <Text>
+
+                <Box>
+
                   <Heading size="lg">
                     There's not Gifts for <strong>{person.name}</strong>!
                   </Heading>
                   <br />
                   Tap the button above to add one.
-                </Text>
+
+                </Box>
               ) : (
                 gifts.map((gift) => (
                   <BoxListItem

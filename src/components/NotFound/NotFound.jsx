@@ -1,7 +1,10 @@
 import { Box, Heading, Text, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { usePage } from "../../context/PageContext";
+import { useEffect } from "react";
 export default function NotFound() {
   const navigate = useNavigate();
+
   const goHome = () => {
     navigate("/");
   };

@@ -22,6 +22,9 @@ const Main = () => {
       >
         <Box p={4} w="100%">
           <Routes>
+
+            <Route path="*" element={<NotFound />} />
+
             <Route path="/" element={<Home />} index />
             <Route path="/people/" element={<People />} />
             <Route path="/people/:id/" element={<Person />} />
@@ -29,7 +32,8 @@ const Main = () => {
             <Route path="/people/:id/gifts/" element={<Gifts />} />
             <Route path="/people/:id/gifts/:giftId" element={<Gift />} />
             <Route path={"/people/:id/gifts/add"} element={<Gift />} />
-            <Route path="*" element={<NotFound />} />
+
+
           </Routes>
         </Box>
       </Container>

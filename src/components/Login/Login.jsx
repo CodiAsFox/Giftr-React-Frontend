@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
-import { useToken } from "../../context/TokenContext";
-import { Button, Text } from "@chakra-ui/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button, Text, useToast } from "@chakra-ui/react";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useToken } from "../../context/TokenContext";
 
 const Login = (props) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -12,6 +12,7 @@ const Login = (props) => {
   const label = props.label;
   const colour = props.colour;
   const icon = props.icon;
+  const toast = useToast();
 
   const navigate = useNavigate();
 
@@ -29,12 +30,40 @@ const Login = (props) => {
     }
   }, []);
 
-  function doLogin() {
+  function checkServerStatus(url) {
+    return fetch(url)
+      .then((response) => {
+        if (response.ok) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .catch((error) => {
+        return false;
+      });
+  }
+
+  async function doLogin() {
     const redirect = import.meta.env.VITE_APP_URL;
     const authURL = import.meta.env.VITE_AUTH_URL;
     const baseURL = `${authURL}?redirect_url=${redirect}`;
     setIsLoading(true);
-    location.href = baseURL;
+    const isAPIUp = await checkServerStatus(import.meta.env.VITE_API);
+
+    if (isAPIUp) {
+      location.href = baseURL;
+    } else {
+      toast({
+        title: "Giftr is Temporarily Offline",
+        description:
+          "Our servers are currently unavailable. We apologize for any inconvenience this may cause. Please try again later.",
+        status: "error",
+        position: "top-right",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
   }
 
   return (

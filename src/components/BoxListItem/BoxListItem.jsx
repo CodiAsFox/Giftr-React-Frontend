@@ -8,7 +8,6 @@ import {
   Button,
   Flex,
   WrapItem,
-  Avatar,
   Badge,
   Link,
   useDisclosure,
@@ -33,8 +32,7 @@ import {
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-// import { AvatarGenerator } from "random-avatar-generator";
-
+import Avatar, { genConfig } from "react-nice-avatar";
 const ListItem = (props) => {
   const navigate = useNavigate();
   const person = props.person;
@@ -47,8 +45,9 @@ const ListItem = (props) => {
     const { id, name, dob } = person;
     const jsDate = new Date(dob);
     const [date, setDate] = useState(null);
-    // const generator = new AvatarGenerator();
-    // const getAvatar = generator.generateRandomAvatar();
+
+    const config = genConfig(id);
+
 
     function doEdit(id) {
       navigate(`/people/${id}`);
@@ -64,26 +63,24 @@ const ListItem = (props) => {
       setLoading(false);
     }, [dob]);
 
-    // console.log(person.gifts.length);
 
-    const GiftCount = person.giftCount;
+
 
     return (
       <Flex>
         <Box flex="5">
-          <Stack direction={["column", "row"]} spacing="24px">
+
+          <Stack direction={["column", "row"]} spacing="10px">
             <WrapItem>
               <SkeletonCircle size="48px" isLoaded={!loading}>
-                {/* <Avatar name={name} src={getAvatar} /> */}
+                <Avatar style={{ width: "3rem", height: "3rem" }} {...config} />
               </SkeletonCircle>
             </WrapItem>
             <Box flex="1">
               <Skeleton isLoaded={!loading}>
                 <Heading size="xs" textTransform="uppercase">
                   {name}
-                  <Badge ml="1" colorScheme="blue">
-                    {GiftCount} {GiftCount >= 1 ? "Gift" : "Gifts"}
-                  </Badge>
+                  
                 </Heading>
               </Skeleton>
               <Skeleton isLoaded={!loading}>
