@@ -51,12 +51,9 @@ const Gift = () => {
   }, []);
 
   function saveGift() {
-    const validatedGift = { ...gift };
-    if (!gift.url.startsWith("https://")) {
-      let urlPrefix = "https://";
-      validatedGift.url = urlPrefix + validatedGift.url;
-      setGift(validatedGift);
-    }
+    const validatedGift = {...gift};
+
+    cleanUpData(validatedGift);
 
     if (validateForm()) {
       //PATCH
@@ -65,6 +62,19 @@ const Gift = () => {
       // POST
       if (!giftId) postGift(validatedGift);
     }
+  }
+
+  function cleanUpData(giftObj) {
+    if (!gift.url.startsWith("https://")) {
+      let urlPrefix = "https://";
+      giftObj.url = urlPrefix + giftObj.url;
+    }
+
+    giftObj.txt = giftObj.txt.trim();
+    giftObj.store = giftObj.store.trim();
+    giftObj.url = giftObj.url.trim();
+
+    setGift(giftObj);
   }
 
   function doDelete() {
