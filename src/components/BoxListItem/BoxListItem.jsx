@@ -176,7 +176,7 @@ const BoxListItem = (props) => {
                   </HStack>
                 </Box>
                 <Box>
-                  <Link href="{url}" isExternal>
+                  <Link href={url} isExternal>
                     <HStack bg="orange.600" p="5px 15px" borderRadius={20}>
                       {url}
                       <Flex alignItems="center" fontSize="sm">
