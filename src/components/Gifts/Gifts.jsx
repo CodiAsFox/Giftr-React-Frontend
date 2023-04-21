@@ -185,7 +185,7 @@ const Gifts = () => {
               display="inline-block"
               pl="3"
             >
-              {person.name} gift List
+              {person.name}'s Gift List
             </Heading>
           </Skeleton>
         </CardHeader>
