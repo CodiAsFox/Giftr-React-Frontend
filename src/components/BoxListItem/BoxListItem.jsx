@@ -33,7 +33,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import Avatar, { genConfig } from "react-nice-avatar";
-const ListItem = (props) => {
+const BoxListItem = (props) => {
   const navigate = useNavigate();
   const person = props.person;
   const gift = props.gift;
@@ -47,7 +47,6 @@ const ListItem = (props) => {
     const [date, setDate] = useState(null);
 
     const config = genConfig(id);
-
 
     function doEdit(id) {
       navigate(`/people/${id}`);
@@ -63,13 +62,9 @@ const ListItem = (props) => {
       setLoading(false);
     }, [dob]);
 
-
-
-
     return (
       <Flex>
         <Box flex="5">
-
           <Stack direction={["column", "row"]} spacing="10px">
             <WrapItem>
               <SkeletonCircle size="48px" isLoaded={!loading}>
@@ -80,7 +75,6 @@ const ListItem = (props) => {
               <Skeleton isLoaded={!loading}>
                 <Heading size="xs" textTransform="uppercase">
                   {name}
-                  
                 </Heading>
               </Skeleton>
               <Skeleton isLoaded={!loading}>
@@ -223,4 +217,4 @@ const ListItem = (props) => {
   }
 };
 
-export default ListItem;
+export default BoxListItem;
