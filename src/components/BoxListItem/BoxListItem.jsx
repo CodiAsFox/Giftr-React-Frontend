@@ -33,7 +33,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import Avatar, { genConfig } from "react-nice-avatar";
-
 const ListItem = (props) => {
   const navigate = useNavigate();
   const person = props.person;
@@ -46,7 +45,9 @@ const ListItem = (props) => {
     const { id, name, dob } = person;
     const jsDate = new Date(dob);
     const [date, setDate] = useState(null);
+
     const config = genConfig(id);
+
 
     function doEdit(id) {
       navigate(`/people/${id}`);
@@ -62,13 +63,13 @@ const ListItem = (props) => {
       setLoading(false);
     }, [dob]);
 
-    // console.log(person.gifts.length);
 
-    const GiftCount = person.gifts ? person.gifts.length : 0;
+
 
     return (
       <Flex>
         <Box flex="5">
+
           <Stack direction={["column", "row"]} spacing="10px">
             <WrapItem>
               <SkeletonCircle size="48px" isLoaded={!loading}>
@@ -79,9 +80,7 @@ const ListItem = (props) => {
               <Skeleton isLoaded={!loading}>
                 <Heading size="xs" textTransform="uppercase">
                   {name}
-                  <Badge ml="1" colorScheme="blue">
-                    {GiftCount} {GiftCount >= 1 ? "Gift" : "Gifts"}
-                  </Badge>
+                  
                 </Heading>
               </Skeleton>
               <Skeleton isLoaded={!loading}>

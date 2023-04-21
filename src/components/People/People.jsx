@@ -84,6 +84,9 @@ const People = () => {
             id: ppl._id,
             name: ppl.name,
             dob: ppl.dob,
+
+            giftCount: ppl.giftCount,
+
           };
           return person;
         });
@@ -115,7 +118,9 @@ const People = () => {
   }, []);
   return (
     <Box className="people" w="100%">
+
       <CheckToken />
+
       <Card borderRadius={10}>
         <CardHeader bg="pink.900" borderTopRadius={10}>
           <Text
@@ -132,7 +137,9 @@ const People = () => {
               width="3rem"
             />
           </Text>
+
           <Heading
+
             size="lg"
             bgGradient="linear(to-r, teal.500, pink.300, pink.500)"
             bgClip="text"
@@ -142,7 +149,9 @@ const People = () => {
             pl="3"
           >
             People List
+
           </Heading>
+
         </CardHeader>
         <CardBody>
           <Skeleton isLoaded={!loading}>
